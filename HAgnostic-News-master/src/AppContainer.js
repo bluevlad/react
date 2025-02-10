@@ -45,7 +45,7 @@ export default class AppContainer extends React.Component {
     const page = (mode === 'reset') ? 0 : this.state.page
     this.setState({loading: true})
     const urls = {
-      'Top': `http://localhost:8080/api/data`,
+      'Top': `http://localhost:8080/api/data?page=`,
       'Latest': `http://localhost:8080/api/data`
     }
     const fetchUrl = urls[this.state.filter]
