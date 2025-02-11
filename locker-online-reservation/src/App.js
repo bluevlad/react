@@ -52,17 +52,17 @@ export default class App extends React.Component {
 
           <Overlay visible={overlayVisible}>
             <Text style={{ fontSize: 18 }}>
-              <Text style={{ fontWeight: 'bold' }}>HAgnostic News</Text> is a simple Hacker News reader for the Web and a React Native app (Android / iOS).
+              <Text style={{ fontWeight: 'bold' }}>Online Locoker Reservation System</Text> is a simple Hacker News reader for the Web and a React Native app (Android / iOS).
             </Text>
             <Text style={{ fontSize: 18, marginTop: 20 }}>
               Made with ❤ by
               <Text
-                onPress={() => { onOpenUrl('https://grigio.org') }}>
+                onPress={() => { onOpenUrl('http://localhost') }}>
                 <Text style={[styles.aboutLink, cursorStyle]}>{" "}Luigi Maselli</Text>
               </Text>
               , source code:
               <Text
-                onPress={() => { onOpenUrl('https://github.com/grigio/HAgnostic-News') }}>
+                onPress={() => { onOpenUrl('http://localhost') }}>
                 <Text style={[styles.aboutLink, cursorStyle]}>{" "}github.com/grigio/HAgnostic-News</Text>
               </Text>
             </Text>
@@ -73,7 +73,7 @@ export default class App extends React.Component {
             <View style={[styles.row, { height: 50 }]}>
               <View style={styles.row}>
                 <Image source={logo} style={{ width: 20 }} />
-                <Text style={[{ fontWeight: 'bold', paddingLeft: 4 }]}>HAgnostic News</Text>
+                <Text style={[{ fontWeight: 'bold', paddingLeft: 4 }]}>사물함 예약 시스템</Text>
                 <Text style={[{ fontSize: 12, paddingLeft: 4 }]}> {Platform.OS}</Text>
               </View>
               <TouchableHighlight

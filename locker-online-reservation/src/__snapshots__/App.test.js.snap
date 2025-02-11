@@ -80,7 +80,7 @@ exports[`renders without crashing 1`] = `
               ]
             }
           >
-            HAgnostic News
+            Online Locoker Reservation System
           </Text>
           <Text
             accessible={true}
@@ -444,7 +444,7 @@ exports[`renders without crashing with Overlay visible 1`] = `
               }
             }
           >
-            HAgnostic News
+            Online Locoker Reservation System
           </Text>
            is a simple Hacker News reader for the Web and a React Native app (Android / iOS).
         </Text>
@@ -574,7 +574,7 @@ exports[`renders without crashing with Overlay visible 1`] = `
               ]
             }
           >
-            HAgnostic News
+            Online Locoker Reservation System
           </Text>
           <Text
             accessible={true}

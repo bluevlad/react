@@ -1,7 +1,7 @@
 {
-  "name": "HAgnosticNews",
-  "displayName": "HAgnosticNews",
+  "name": "Online Locoker Reservation System",
+  "displayName": "Online Locoker Reservation System",
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "0.0.0.1"
   }
 }
