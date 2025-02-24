@@ -45,31 +45,9 @@ export default class App extends React.Component {
 
     return (
       <Card>
-        {Platform.OS === 'android' ? (
-          <StatusBar backgroundColor={'#d25500'} />
-        ) : <View />}
         <View style={styles.body}>
 
-          <Overlay visible={overlayVisible}>
-            <Text style={{ fontSize: 18 }}>
-              <Text style={{ fontWeight: 'bold' }}>Online Locoker Reservation System</Text> is a simple Hacker News reader for the Web and a React Native app (Android / iOS).
-            </Text>
-            <Text style={{ fontSize: 18, marginTop: 20 }}>
-              Made with ❤ by
-              <Text
-                onPress={() => { onOpenUrl('http://localhost') }}>
-                <Text style={[styles.aboutLink, cursorStyle]}>{" "}Luigi Maselli</Text>
-              </Text>
-              , source code:
-              <Text
-                onPress={() => { onOpenUrl('http://localhost') }}>
-                <Text style={[styles.aboutLink, cursorStyle]}>{" "}github.com/grigio/HAgnostic-News</Text>
-              </Text>
-            </Text>
-          </Overlay>
-
-          <View style={[styles.column, styles.header,
-          Platform.OS === 'ios' ? { height: 75, paddingTop: 20 } : {}]}>
+          <View style={[styles.column, styles.header, { height: 75, paddingTop: 20 }]}>
             <View style={[styles.row, { height: 50 }]}>
               <View style={styles.row}>
                 <Image source={logo} style={{ width: 20 }} />
@@ -106,7 +84,6 @@ export default class App extends React.Component {
                 )}
               </View>
             ) : null}
-
           </View>
 
           <View style={styles.scrollViewContainer}>
@@ -123,17 +100,17 @@ export default class App extends React.Component {
                     <Text style={{ flex: 1 }}>
                       <Text
                         style={[{ fontWeight: 'bold', fontSize: 18 }, cursorStyle]}
-                        onPress={() => onOpenUrl(`http://localhost:8080/api/getBox?box_cd=${item.box_cd}`)}>{i + 1}. {item.box_nm}</Text>
+                        onPress={() => onOpenUrl(`http://localhost:8080/api/getLocker?box_cd=${item.BOX_CD}`)}>{i + 1}. {item.BOX_NM}</Text>
                       <Text style={[{ flex: 1, color: '#979797' }, cursorStyle]}> {item.author}</Text>
                     </Text>
                   </View>
                   <View style={styles.itemSubRow}>
-                    <Text style={{ padding: 2 }}>사용료 : {item.box_price}원</Text>
-                    <Text style={{ padding: 2 }}>보증금 : {item.deposit} 원</Text>
+                    <Text style={{ padding: 2 }}>사용료 : {item.BOX_PRICE}원</Text>
+                    <Text style={{ padding: 2 }}>보증금 : {item.DEPOSIT} 원</Text>
                   </View>
                   <View style={styles.itemSubRow}>
-                    <Text style={{ padding: 2 }}>{item.row_count}층 | {item.row_num}열 | {item.start_num} - {item.end_num} |</Text>
-                    <Text style={{ padding: 2}}> {item.upd_dt}</Text>
+                    <Text style={{ padding: 2 }}>{item.ROW_COUNT}층 | {item.ROW_NUM}열 | {item.START_NUM} - {item.END_NUM} |</Text>
+                    <Text style={{ padding: 2}}> {item.UPD_DT}</Text>
                   </View>
                 </View>
 

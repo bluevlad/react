@@ -25,7 +25,7 @@ const GitHubRepo = (props) => {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    {props.user}/{props.name}
+                    {props.repo.user}/{props.repo.name}
                 </a>
             </h2>
             <p className={styles.description} dangerouslySetInnerHTML={getDescription()} />

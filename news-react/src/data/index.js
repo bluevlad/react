@@ -5,8 +5,10 @@ import moment from "moment";
 const expiresDuration = 5;
 const expiresUnit = "seconds";
 
+const baseUrl = "http://localhost:8080/api";
+
 export const hackernews = (callback) => {
-  const baseUrl = "http://localhost:8080/api/getBoardAll";
+  const newsUrl = baseUrl+"/getBoardAll";
 
   localforage.getItem("hackernews").then((cache) => {
     if (cache) {
@@ -15,17 +17,16 @@ export const hackernews = (callback) => {
       }
     }
 
-    request.get(baseUrl).end((error, response) => {
+    request.get(newsUrl).end((error, response) => {
       let stories = response.body.slice(0, 30); // grab 30 items
       let data = [];
       let index = 0;
 
       for (let boardId of stories) {
-        const apiUrl = "http://localhost:8080/api/getBoard?boardId="+boardId;
+        const apiUrl = baseUrl+"/getBoard?boardId="+boardId;
         const cachedIndex = index + 1;
 
         request.get(apiUrl).end((error, response) => {
-          console.log(response);
           data.push({
             id: response.body.BOARD_ID,
             title: response.body.BOARD_TITLE,
@@ -52,17 +53,17 @@ export const hackernews = (callback) => {
 };
 
 export const github = (callback) => {
-  const baseUrl = "http://localhost:8080/api/getBoardList";
+  const gitUrl = baseUrl+"/getLockerList";
 
-    request.get(baseUrl).end((error, response) => {
+    request.get(gitUrl).end((error, response) => {
       let data = [];
-      for (let repo of response) {
+      for (let repo of response.body) {
         data.push({
-          url: repo.URL,
+          url: repo.BOX_NM,
           user: repo.UPD_ID,
-          name: repo.board_title,
+          name: repo.BOX_NM,
           description: repo.descendants ? repo.descendants.trim() : null,
-          stars: parseInt(repo.score),
+          stars: parseInt(repo.USE_CNT),
           language: repo.language ? repo.language.trim() : null,
         });
       }

@@ -45,8 +45,8 @@ export default class AppContainer extends React.Component {
     const page = (mode === 'reset') ? 0 : this.state.page
     this.setState({loading: true})
     const urls = {
-      'Top': `http://localhost:8080/api/getLockerList`,
-      'Latest': `http://localhost:8080/api/getLockerList`
+      'Top': `http://localhost:8080/api/getLockerList?page=`,
+      'Latest': `http://localhost:8080/api/getLockerList?page=`
     }
     const fetchUrl = urls[this.state.filter]
     fetch(fetchUrl)
@@ -54,7 +54,7 @@ export default class AppContainer extends React.Component {
       .then(data => {
         const previousItems = (page === 0) ? [] : this.state.items
         this.setState({
-          items: [ ...previousItems, ...data.hits ],
+          items: [ ...previousItems, ...data.lockers ],
           loading: false,
           errors: {},
           page: page + 1

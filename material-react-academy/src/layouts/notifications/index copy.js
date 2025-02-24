@@ -12,9 +12,8 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+
+import { useState } from "react";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -47,31 +46,14 @@ function Notifications() {
   const openErrorSB = () => setErrorSB(true);
   const closeErrorSB = () => setErrorSB(false);
 
-  const [data, setData] = useState("");
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    fetch("http://localhost:8080/api/getBoardList")
-      .then((response) => response.json())
-      .then((data) => {
-        data: [data];
-      });
-    console.log(data);
-  };
-
   const alertContent = (name) => (
-    <MDAlert color={name} dismissible>
-      <MDTypography variant="body2" color="white">
-        A simple {name} alert with{" "}
-        <MDTypography component="a" href="#" variant="body2" fontWeight="medium" color="white">
-          an example link
-        </MDTypography>
-        . Give it a click if you like.
+    <MDTypography variant="body2" color="white">
+      A simple {name} alert with{" "}
+      <MDTypography component="a" href="#" variant="body2" fontWeight="medium" color="white">
+        an example link
       </MDTypography>
-    </MDAlert>
+      . Give it a click if you like.
+    </MDTypography>
   );
 
   const renderSuccessSB = (
@@ -139,14 +121,30 @@ function Notifications() {
                 <MDTypography variant="h5">Alerts</MDTypography>
               </MDBox>
               <MDBox pt={2} px={2}>
-                {alertContent("primary")}
-                {alertContent("secondary")}
-                {alertContent("success")}
-                {alertContent("error")}
-                {alertContent("warning")}
-                {alertContent("info")}
-                {alertContent("light")}
-                {alertContent("dark")}
+                <MDAlert color="primary" dismissible>
+                  {alertContent("primary")}
+                </MDAlert>
+                <MDAlert color="secondary" dismissible>
+                  {alertContent("secondary")}
+                </MDAlert>
+                <MDAlert color="success" dismissible>
+                  {alertContent("success")}
+                </MDAlert>
+                <MDAlert color="error" dismissible>
+                  {alertContent("error")}
+                </MDAlert>
+                <MDAlert color="warning" dismissible>
+                  {alertContent("warning")}
+                </MDAlert>
+                <MDAlert color="info" dismissible>
+                  {alertContent("info")}
+                </MDAlert>
+                <MDAlert color="light" dismissible>
+                  {alertContent("light")}
+                </MDAlert>
+                <MDAlert color="dark" dismissible>
+                  {alertContent("dark")}
+                </MDAlert>
               </MDBox>
             </Card>
           </Grid>
