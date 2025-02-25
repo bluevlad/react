@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceholderShimmer from '../PlaceholderShimmer';
-import HackerNewsStory from '../HackerNews/HackerNewsStory';
+import LockerList from '../Locker/LockerList';
 import GitHubRepo from '../GitHub/GitHubRepo';
-import ProductHuntItem from '../ProductHunt/ProductHuntItem';
+import ExamItem from '../Exam/ExamItem';
 
 class NewsList extends React.Component {
 
@@ -28,10 +28,10 @@ class NewsList extends React.Component {
             <div className={this.props.className}>
                 {
                     this.props.data.map(item => {
-                        if (this.props.source == 'hackernews') {
+                        if (this.props.source == 'locker') {
                             return (
-                                <HackerNewsStory
-                                    key={item.id}
+                                <LockerList
+                                    key={item.box_cd}
                                     story={item}
                                 />
                             )
@@ -44,11 +44,11 @@ class NewsList extends React.Component {
                                 />
                             )
                         }
-                        if (this.props.source == 'producthunt') {
+                        if (this.props.source == 'examitem') {
                             return (
-                                <ProductHuntItem
+                                <ExamItem
                                     key={item.id}
-                                    product={item}
+                                    exam={item}
                                 />
                             )
                         }

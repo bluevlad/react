@@ -1,7 +1,9 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {HackerNewsIcon, GitHubIcon, ProductHuntIcon} from '../Icons';
-import {hackernews, github, producthunt} from '../../data';
+import {locker} from '../../data/locker';
+import {github} from '../../data/github';
+import {examitem} from '../../data/exam';
 import NewsList from '../NewsList';
 import styles from './index.css';
 
@@ -11,7 +13,7 @@ class News extends React.Component {
         super();
 
         this.state = {
-            hackernews: {
+            locker: {
                 data: [],
                 loaded: false,
             },
@@ -19,7 +21,7 @@ class News extends React.Component {
                 data: [],
                 loaded: false,
             },
-            producthunt: {
+            examitem: {
                 data: [],
                 loaded: false,
             },
@@ -27,9 +29,9 @@ class News extends React.Component {
     }
 
     componentDidMount () {
-        hackernews((data) => {
+        locker((data) => {
             this.setState({
-                hackernews: {
+                locker: {
                     data: data,
                     loaded: true,
                 },
@@ -51,11 +53,11 @@ class News extends React.Component {
                     });
                 }
             break;
-            case 'producthunt':
-                if (!this.state.producthunt.loaded) {
-                    producthunt((data) => {
+            case 'examitem':
+                if (!this.state.examitem.loaded) {
+                    examitem((data) => {
                         this.setState({
-                            producthunt: {
+                            examitem: {
                                 data: data,
                                 loaded: true,
                             },
@@ -73,20 +75,20 @@ class News extends React.Component {
                 contentContainerClassName={styles.content}
             >
 
-                <Tab icon={<HackerNewsIcon title="Hacker News" />}>
+                <Tab icon={<HackerNewsIcon title="Locker Resurvation" />}>
                     <h1 className={styles.heading}>
-                        Hacker News
+                        Locker Resurvation
                     </h1>
 
                     <NewsList
-                        source="hackernews"
-                        data={this.state.hackernews.data}
-                        loaded={this.state.hackernews.loaded}
+                        source="locker"
+                        data={this.state.locker.data}
+                        loaded={this.state.locker.loaded}
                         className={styles.storiesContainer}
                     />
 
-                    <a href="https://news.ycombinator.com/news?p=2">
-                        Go to Hacker News (page 2)
+                    <a href="https://localhost:3000/api/getLockerList?page=2">
+                        Go to Locker Resurvation (page 2)
                     </a>
                 </Tab>
 
@@ -112,23 +114,23 @@ class News extends React.Component {
                 </Tab>
 
                 <Tab
-                    icon={<ProductHuntIcon title="Product Hunt Tech" />}
-                    value="producthunt"
+                    icon={<ProductHuntIcon title="Exam Item" />}
+                    value="examitem"
                     onActive={this.handleActiveTab.bind(this)}
                 >
                     <h1 className={styles.heading}>
-                        Product Hunt Tech
+                        Exam Item
                     </h1>
 
                     <NewsList
-                        source="producthunt"
-                        data={this.state.producthunt.data}
-                        loaded={this.state.producthunt.loaded}
+                        source="examitem"
+                        data={this.state.examitem.data}
+                        loaded={this.state.examitem.loaded}
                         className={styles.storiesContainer}
                     />
 
-                    <a href="https://www.producthunt.com/tech">
-                        Go to Product Hunt Tech
+                    <a href="https://localhost:8080/exam">
+                        Go to Exam Item
                     </a>
                 </Tab>
 
