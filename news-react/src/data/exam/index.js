@@ -5,10 +5,9 @@ import moment from "moment";
 const expiresDuration = 5;
 const expiresUnit = "seconds";
 
-const baseUrl = "http://localhost:8080/api";
+const baseUrl = "http://localhost:8080/api/getExamBankItemList";
 
 export const examitem = (callback) => {
-  const examUrl = baseUrl + "/getExamBankItemList";
 
   localforage.getItem("examitem").then((cache) => {
     if (cache) {
@@ -19,7 +18,7 @@ export const examitem = (callback) => {
       }
     }
 
-    request.get(examUrl).end((error, response) => {
+    request.get(baseUrl).end((error, response) => {
       let data = [];
       for (let exam of response.body) {
         data.push({

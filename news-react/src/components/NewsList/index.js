@@ -32,7 +32,7 @@ class NewsList extends React.Component {
                             return (
                                 <LockerList
                                     key={item.box_cd}
-                                    story={item}
+                                    loc={item}
                                 />
                             )
                         }
