@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../NewsList/index.css';
 
-const LockerList = (props) => {
+const LockerView = (props) => {
 
     return (
         <div className={styles.container}>
             <h2 className={styles.heading}>
                 <a
-                    href={"/Locker/?id="+props.loc.box_cd}
+                    href={props.loc.box_cd}
+                    target="_blank"
                     rel="noopener noreferrer"
                 >
                     {props.loc.box_nm}
@@ -31,4 +32,4 @@ LockerList.propTypes = {
     loc: PropTypes.object.isRequired,
 };
 
-export default LockerList;
+export default LockerView;

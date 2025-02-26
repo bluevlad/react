@@ -1,13 +1,11 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import {LockerIcon, GitHubIcon, ProductHuntIcon} from '../Icons';
+import {LockerIcon} from '../Icons';
 import {locker} from '../../data/locker';
-import {github} from '../../data/github';
-import {examitem} from '../../data/exam';
 import NewsList from '../NewsList';
 import styles from './index.css';
 
-class News extends React.Component {
+class Lockers extends React.Component {
 
     constructor () {
         super();
@@ -87,52 +85,6 @@ class News extends React.Component {
                         loaded={this.state.locker.loaded}
                         className={styles.storiesContainer}
                     />
-
-                    <a href="/?page=2">
-                        Go to Locker Resurvation (page 2)
-                    </a>
-                </Tab>
-
-                <Tab
-                    icon={<GitHubIcon title="GitHub Trending" />}
-                    value="github"
-                    onActive={this.handleActiveTab.bind(this)}
-                >
-                    <h1 className={styles.heading}>
-                        GitHub Trending
-                    </h1>
-
-                    <NewsList
-                        source="github"
-                        data={this.state.github.data}
-                        loaded={this.state.github.loaded}
-                        className={styles.storiesContainer}
-                    />
-
-                    <a href="https://github.com/trending">
-                        Go to GitHub Trending
-                    </a>
-                </Tab>
-
-                <Tab
-                    icon={<ProductHuntIcon title="Exam Item" />}
-                    value="examitem"
-                    onActive={this.handleActiveTab.bind(this)}
-                >
-                    <h1 className={styles.heading}>
-                        Exam Item
-                    </h1>
-
-                    <NewsList
-                        source="examitem"
-                        data={this.state.examitem.data}
-                        loaded={this.state.examitem.loaded}
-                        className={styles.storiesContainer}
-                    />
-
-                    <a href="https://localhost:8080/exam">
-                        Go to Exam Item
-                    </a>
                 </Tab>
 
             </Tabs>
@@ -140,4 +92,4 @@ class News extends React.Component {
     }
 };
 
-export default News;
+export default Lockers;

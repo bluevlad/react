@@ -5,4 +5,7 @@ import App from './components/App';
 
 injectTapEventPlugin();
 
-render(<App />, document.getElementById('root'));
+render(
+    <App />, 
+    document.getElementById('root')
+);
