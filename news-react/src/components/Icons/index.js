@@ -31,7 +31,7 @@ export const HackerNewsIcon = (props) => (
     </SvgIcon>
 );
 
-export const GitHubIcon = (props) => (
+export const BoardIcon = (props) => (
     <SvgIcon
         viewBox="0 0 256 250"
         width={props.width}
@@ -45,7 +45,7 @@ export const GitHubIcon = (props) => (
     </SvgIcon>
 );
 
-export const ProductHuntIcon = (props) => (
+export const ExamIcon = (props) => (
     <SvgIcon
         viewBox="0 0 256 256"
         width={props.width}

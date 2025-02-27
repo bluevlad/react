@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '../NewsList/index.css';
+import styles from '../List/index.css';
 
 const LockerList = (props) => {
 
@@ -8,18 +8,18 @@ const LockerList = (props) => {
         <div className={styles.container}>
             <h2 className={styles.heading}>
                 <a
-                    href={"/Locker/?id="+props.loc.box_cd}
+                    href={"/Locker/?id="+props.list.box_cd}
                     rel="noopener noreferrer"
                 >
-                    {props.loc.box_nm}
+                    {props.list.box_nm}
                 </a>
             </h2>
             <footer className={styles.footer}>
                 <span className={styles.footerItem}>
-                     {props.loc.box_price} 원&nbsp;({props.loc.deposit})
+                     {props.list.box_price} 원&nbsp;({props.list.deposit})
                 </span>
                 <span className={styles.footerItem}>
-                     {props.loc.box_count} ({props.loc.use_cnt} / {props.loc.not_cnt})
+                     {props.list.box_count} ({props.list.use_cnt} / {props.list.not_cnt})
                 </span>
             </footer>
         </div>
@@ -28,7 +28,7 @@ const LockerList = (props) => {
 };
 
 LockerList.propTypes = {
-    loc: PropTypes.object.isRequired,
+    list: PropTypes.object.isRequired,
 };
 
 export default LockerList;

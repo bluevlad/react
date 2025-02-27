@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '../NewsList/index.css';
+import styles from '../List/index.css';
 
 const ExamItem = (props) => {
 

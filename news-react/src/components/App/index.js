@@ -2,9 +2,7 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Theme from '../../../config/theme';
 import Header from '../Header';
-import News from '../News';
-import Locker from '../Locker';
-import styles from './index.css';
+import Academy from '../Academy';
 
 class App extends React.Component {
 
@@ -13,8 +11,7 @@ class App extends React.Component {
             <MuiThemeProvider muiTheme={Theme}>
                 <div>
                     <Header />
-                    <News />
-                    <Locker />
+                    <Academy />
                 </div>
             </MuiThemeProvider>
         )

@@ -1,13 +1,13 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import {LockerIcon, GitHubIcon, ProductHuntIcon} from '../Icons';
+import {LockerIcon, ExamIcon, BoardIcon} from '../Icons';
 import {locker} from '../../data/locker';
-import {github} from '../../data/github';
 import {examitem} from '../../data/exam';
-import NewsList from '../NewsList';
+import {board} from '../../data/board';
+import List from '../List';
 import styles from './index.css';
 
-class News extends React.Component {
+class Academy extends React.Component {
 
     constructor () {
         super();
@@ -17,11 +17,11 @@ class News extends React.Component {
                 data: [],
                 loaded: false,
             },
-            github: {
+            examitem: {
                 data: [],
                 loaded: false,
             },
-            examitem: {
+            board: {
                 data: [],
                 loaded: false,
             },
@@ -41,11 +41,11 @@ class News extends React.Component {
 
     handleActiveTab (tab) {
         switch (tab.props.value) {
-            case 'github':
-                if (!this.state.github.loaded) {
-                    github((data) => {
+            case 'examitem':
+                if (!this.state.examitem.loaded) {
+                    examitem((data) => {
                         this.setState({
-                            github: {
+                            examitem: {
                                 data: data,
                                 loaded: true,
                             },
@@ -53,11 +53,11 @@ class News extends React.Component {
                     });
                 }
             break;
-            case 'examitem':
-                if (!this.state.examitem.loaded) {
-                    examitem((data) => {
+            case 'board':
+                if (!this.state.board.loaded) {
+                    board((data) => {
                         this.setState({
-                            examitem: {
+                            board: {
                                 data: data,
                                 loaded: true,
                             },
@@ -81,7 +81,7 @@ class News extends React.Component {
                         Locker Resurvation
                     </h1>
 
-                    <NewsList
+                    <List
                         source="locker"
                         data={this.state.locker.data}
                         loaded={this.state.locker.loaded}
@@ -89,33 +89,12 @@ class News extends React.Component {
                     />
 
                     <a href="/?page=2">
-                        Go to Locker Resurvation (page 2)
+                        Go to Next (page 2)
                     </a>
                 </Tab>
 
                 <Tab
-                    icon={<GitHubIcon title="GitHub Trending" />}
-                    value="github"
-                    onActive={this.handleActiveTab.bind(this)}
-                >
-                    <h1 className={styles.heading}>
-                        GitHub Trending
-                    </h1>
-
-                    <NewsList
-                        source="github"
-                        data={this.state.github.data}
-                        loaded={this.state.github.loaded}
-                        className={styles.storiesContainer}
-                    />
-
-                    <a href="https://github.com/trending">
-                        Go to GitHub Trending
-                    </a>
-                </Tab>
-
-                <Tab
-                    icon={<ProductHuntIcon title="Exam Item" />}
+                    icon={<ExamIcon title="Exam Item" />}
                     value="examitem"
                     onActive={this.handleActiveTab.bind(this)}
                 >
@@ -123,15 +102,36 @@ class News extends React.Component {
                         Exam Item
                     </h1>
 
-                    <NewsList
+                    <List
                         source="examitem"
                         data={this.state.examitem.data}
                         loaded={this.state.examitem.loaded}
                         className={styles.storiesContainer}
                     />
 
-                    <a href="https://localhost:8080/exam">
-                        Go to Exam Item
+                    <a href="/?page=2">
+                    Go to Next (page 2)
+                    </a>
+                </Tab>
+
+                <Tab
+                    icon={<BoardIcon title="Board List" />}
+                    value="board"
+                    onActive={this.handleActiveTab.bind(this)}
+                >
+                    <h1 className={styles.heading}>
+                        Notifications
+                    </h1>
+
+                    <List
+                        source="board"
+                        data={this.state.board.data}
+                        loaded={this.state.board.loaded}
+                        className={styles.storiesContainer}
+                    />
+
+                    <a href="/?page=2">
+                    Go to Next (page 2)
                     </a>
                 </Tab>
 
@@ -140,4 +140,4 @@ class News extends React.Component {
     }
 };
 
-export default News;
+export default Academy;

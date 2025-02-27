@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceholderShimmer from '../PlaceholderShimmer';
 import LockerList from '../Locker/LockerList';
-import GitHubRepo from '../GitHub/GitHubRepo';
 import ExamItem from '../Exam/ExamItem';
+import BoardList from '../Board/BoardList';
 
-class NewsList extends React.Component {
+class List extends React.Component {
 
     shouldComponentUpdate (nextProps) {
       return this.props.loaded !== nextProps.loaded;
@@ -32,15 +32,7 @@ class NewsList extends React.Component {
                             return (
                                 <LockerList
                                     key={item.box_cd}
-                                    loc={item}
-                                />
-                            )
-                        }
-                        if (this.props.source == 'github') {
-                            return (
-                                <GitHubRepo
-                                    key={item.url}
-                                    repo={item}
+                                    list={item}
                                 />
                             )
                         }
@@ -52,6 +44,14 @@ class NewsList extends React.Component {
                                 />
                             )
                         }
+                        if (this.props.source == 'board') {
+                            return (
+                                <BoardList
+                                    key={item.board_id}
+                                    board={item}
+                                />
+                            )
+                        }
                     })
                 }
             </div>
@@ -60,11 +60,11 @@ class NewsList extends React.Component {
 
 };
 
-NewsList.propsTypes = {
+List.propsTypes = {
     source: PropTypes.string.isRequired,
     getData: PropTypes.object.isRequired,
     data: PropTypes.object.isRequired,
     loaded: PropTypes.bool.isRequired,
 };
 
-export default NewsList;
+export default List;

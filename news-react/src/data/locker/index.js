@@ -1,5 +1,4 @@
 import request from "superagent";
-import localforage from "localforage";
 import moment from "moment";
 
 const expiresDuration = 5;
@@ -15,7 +14,7 @@ export const locker = (callback) => {
 
   request.get(baseUrl+"/getLockerList?curPage="+page).end((error, response) => {
     let data = [];
-    for (let loc of response.body) {
+    for (let loc of response.body.lockers) {
       data.push({
         box_cd: loc.box_cd,
         box_nm: loc.box_nm,

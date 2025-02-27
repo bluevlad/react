@@ -22,7 +22,7 @@ Logo.propTypes = {
 };
 
 Logo.defaultProps = {
-    desc: 'devnews logo',
+    desc: 'doft academy logo',
     width: 'auto',
     height: '20px',
 };

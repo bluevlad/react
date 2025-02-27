@@ -9,17 +9,12 @@ const fontMagician = require('postcss-font-magician');
 
 const meta = JSON.parse(fs.readFileSync('./config/app.json', 'utf8'));
 const colors = JSON.parse(fs.readFileSync('./config/colors.json', 'utf8'));
-
-const PROD_ENV = process.env.NODE_ENV === 'production';
-const DEV_ENV = !PROD_ENV;
-
-const cssModulesNameFormat = DEV_ENV ? '[path][name]__[local]___[hash:base64:5]' : '[hash:base64]';
+const cssModulesNameFormat = '[hash:base64]';
 
 const config = {
     entry: './src/index.js',
     output: {
         path: './build',
-        filename: DEV_ENV ? 'dev.bundle.js' : '[hash].bundle.js',
     },
     plugins: [
         new HtmlPlugin({
@@ -36,14 +31,14 @@ const config = {
             inject: false,
             meta: meta,
             colors: colors,
-            baseUrl: DEV_ENV ? 'http://localhost:3000' : 'https://devne.ws',
+            baseUrl: 'http://localhost:3000',
         }),
         new CopyPlugin([
             {from: './src/static', to: './'},
         ]),
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': DEV_ENV ? JSON.stringify('development') : JSON.stringify('production'),
+                'NODE_ENV': JSON.stringify('production'),
             }
         }),
     ],
@@ -54,7 +49,7 @@ const config = {
                 loader: 'babel',
                 exclude: [/node_modules/, /.ejs$/],
                 query: {
-                    presets: DEV_ENV ? ['env', 'react', 'react-hmre'] : ['env', 'react'],
+                    presets: ['env', 'react'],
                 },
             },
             {
@@ -88,14 +83,5 @@ const config = {
         ];
     },
 };
-
-if (DEV_ENV) {
-    config.plugins.push(
-        new OpenBrowserPlugin({
-            url: 'http://localhost:3000',
-        })
-    );
-    config.devtool = '#inline-source-map';
-}
 
 module.exports = config;
