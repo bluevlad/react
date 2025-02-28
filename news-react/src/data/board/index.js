@@ -14,16 +14,16 @@ export const board = (callback) => {
 
   request.get(baseUrl+"/getBoardList?curPage="+page).end((error, response) => {
     let data = [];
-    for (let bd of response.body) {
+    for (let bd of response.body.boardList) {
       data.push({
         board_id: bd.board_id,
         board_title: bd.board_title,
         board_memo: bd.board_memo,
         is_use: bd.is_use,
         reg_id: bd.reg_id,
-        reg_dt: moment.unix(bd.reg_dt).fromNow(),
+        reg_dt: bd.reg_dt,
         upd_id: bd.upd_id,
-        upd_dt: moment.unix(bd.upd_dt).fromNow(),
+        upd_dt: bd.upd_dt,
       });
     }
 

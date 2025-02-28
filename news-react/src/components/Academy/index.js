@@ -4,7 +4,9 @@ import {LockerIcon, ExamIcon, BoardIcon} from '../Icons';
 import {locker} from '../../data/locker';
 import {examitem} from '../../data/exam';
 import {board} from '../../data/board';
+import {lPage} from '../../data/locker';
 import List from '../List';
+import Page from '../Page';
 import styles from './index.css';
 
 class Academy extends React.Component {
@@ -25,6 +27,10 @@ class Academy extends React.Component {
                 data: [],
                 loaded: false,
             },
+            lPage: {
+                data: [],
+                loaded: false,
+            },
         };
     }
 
@@ -32,6 +38,14 @@ class Academy extends React.Component {
         locker((data) => {
             this.setState({
                 locker: {
+                    data: data,
+                    loaded: true,
+                },
+            });
+        });
+        lPage((data) => {
+            this.setState({
+                lPage: {
                     data: data,
                     loaded: true,
                 },
@@ -88,9 +102,13 @@ class Academy extends React.Component {
                         className={styles.storiesContainer}
                     />
 
-                    <a href="/?page=2">
-                        Go to Next (page 2)
-                    </a>
+                    <Page
+                        source="lPage"
+                        data={this.state.lPage.data}
+                        loaded={this.state.lPage.loaded}
+                        className={styles.storiesContainer}
+                    />
+
                 </Tab>
 
                 <Tab

@@ -6,6 +6,33 @@ const expiresUnit = "seconds";
 
 const baseUrl = "http://localhost:8080/api";
 
+export const lPage = (callback) => {
+
+  const url = new URL(window.location.href);
+  const param = new URLSearchParams(url.search);
+  const page = param.get("page") === null ? 1 : param.get("page");
+
+  request.get(baseUrl+"/getLockerList?curPage="+page).end((error, response) => {
+    let data = [];
+      data.push({
+        currentPageNo: response.body.paginationInfo.currentPageNo,
+        recordCountPerPage: parseInt(response.body.recordCountPerPage),
+        pageSize: parseInt(response.body.pageSize),
+        totalRecordCount: parseInt(response.body.totalRecordCount),
+        totalPageCount: parseInt(response.body.totalPageCount),
+        firstPageNoOnPageList: parseInt(response.body.firstPageNoOnPageList),
+        lastPageNoOnPageList: parseInt(response.body.lastPageNoOnPageList),
+        firstRecordIndex: parseInt(response.body.firstRecordIndex),
+        lastRecordIndex: parseInt(response.body.lastRecordIndex),
+        lastPageNo: parseInt(response.body.lastPageNo),
+        firstPageNo: parseInt(response.body.firstPageNo),
+      });
+
+    callback(data);
+  });
+
+};
+
 export const locker = (callback) => {
 
   const url = new URL(window.location.href);
@@ -14,6 +41,7 @@ export const locker = (callback) => {
 
   request.get(baseUrl+"/getLockerList?curPage="+page).end((error, response) => {
     let data = [];
+    
     for (let loc of response.body.lockers) {
       data.push({
         box_cd: loc.box_cd,
@@ -28,7 +56,7 @@ export const locker = (callback) => {
         box_price: loc.box_price,
         deposit: loc.deposit,
         upd_id: loc.upd_id,
-        upd_dt: moment.unix(loc.upd_dt).fromNow(),
+        upd_dt: loc.upd_dt,
       });
     }
 
