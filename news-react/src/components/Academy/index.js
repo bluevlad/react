@@ -50,6 +50,7 @@ class Academy extends React.Component {
                     loaded: true,
                 },
             });
+            console.log("lPage : " + lPage);
         });
     }
 

@@ -16,18 +16,17 @@ export const lPage = (callback) => {
     let data = [];
       data.push({
         currentPageNo: response.body.paginationInfo.currentPageNo,
-        recordCountPerPage: parseInt(response.body.recordCountPerPage),
-        pageSize: parseInt(response.body.pageSize),
-        totalRecordCount: parseInt(response.body.totalRecordCount),
-        totalPageCount: parseInt(response.body.totalPageCount),
-        firstPageNoOnPageList: parseInt(response.body.firstPageNoOnPageList),
-        lastPageNoOnPageList: parseInt(response.body.lastPageNoOnPageList),
-        firstRecordIndex: parseInt(response.body.firstRecordIndex),
-        lastRecordIndex: parseInt(response.body.lastRecordIndex),
-        lastPageNo: parseInt(response.body.lastPageNo),
-        firstPageNo: parseInt(response.body.firstPageNo),
+        recordCountPerPage: parseInt(response.body.paginationInfo.recordCountPerPage),
+        pageSize: parseInt(response.body.paginationInfo.pageSize),
+        totalRecordCount: parseInt(response.body.paginationInfo.totalRecordCount),
+        totalPageCount: parseInt(response.body.paginationInfo.totalPageCount),
+        firstPageNoOnPageList: parseInt(response.body.paginationInfo.firstPageNoOnPageList),
+        lastPageNoOnPageList: parseInt(response.body.paginationInfo.lastPageNoOnPageList),
+        firstRecordIndex: parseInt(response.body.paginationInfo.firstRecordIndex),
+        lastRecordIndex: parseInt(response.body.paginationInfo.lastRecordIndex),
+        lastPageNo: parseInt(response.body.paginationInfo.lastPageNo),
+        firstPageNo: parseInt(response.body.paginationInfo.firstPageNo),
       });
-
     callback(data);
   });
 
