@@ -38,7 +38,7 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
 import Classes from "layouts/classes";
-import Users from "layouts/users";
+import Boards from "layouts/board";
 import Advices from "layouts/advices";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
@@ -69,11 +69,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "사용자관리",
-    key: "users",
+    name: "게시판",
+    key: "boards",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/users",
-    component: <Users />,
+    route: "/boards",
+    component: <Boards />,
   },
   {
     type: "collapse",
