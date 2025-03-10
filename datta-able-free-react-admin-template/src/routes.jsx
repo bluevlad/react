@@ -57,6 +57,11 @@ const routes = [
       },
       {
         exact: 'true',
+        path: '/board',
+        element: lazy(() => import('./views/board'))
+      },
+      {
+        exact: 'true',
         path: '/basic/button',
         element: lazy(() => import('./views/ui-elements/basic/BasicButton'))
       },
@@ -94,11 +99,6 @@ const routes = [
         exact: 'true',
         path: '/tables/bootstrap',
         element: lazy(() => import('./views/tables/BootstrapTable'))
-      },
-      {
-        exact: 'true',
-        path: '/board',
-        element: lazy(() => import('./views/board'))
       },
       {
         exact: 'true',

@@ -16,6 +16,21 @@ const menuItems = {
       ]
     },
     {
+      id: 'Academy',
+      title: 'Academy',
+      type: 'group',
+      icon: 'icon-academy',
+      children: [
+        {
+          id: 'board',
+          title: 'Board',
+          type: 'item',
+          icon: 'feather icon-box',
+          url: '/board'
+        }
+      ]
+    },
+    {
       id: 'ui-element',
       title: 'UI ELEMENT',
       type: 'group',
@@ -83,22 +98,9 @@ const menuItems = {
         {
           id: 'ui-table',
           title: 'UI Table',
-          type: 'collapse',
+          type: 'item',
           icon: 'feather icon-server',
-          children: [
-            {
-              id: 'table',
-              title: 'Table',
-              type: 'item',
-              url: '/tables/bootstrap'
-            },
-            {
-              id: 'board',
-              title: 'Board',
-              type: 'item',
-              url: '/board'
-            },
-          ]
+          url: '/tables/bootstrap'
         }
       ]
     },
