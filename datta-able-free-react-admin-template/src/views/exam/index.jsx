@@ -1,15 +1,15 @@
 import React from 'react';
-import {board} from '../../data/board';
+import {exam} from '../../data/exam';
 import List from './List';
 import { Row, Col, Card, Table } from 'react-bootstrap';
 
-class Board extends React.Component {
+class Exam extends React.Component {
 
     constructor () {
         super();
 
         this.state = {
-            board: {
+            exam: {
                 data: [],
                 loaded: false,
             },
@@ -17,9 +17,9 @@ class Board extends React.Component {
     }
 
     componentDidMount () {
-        board((data) => {
+        exam((data) => {
             this.setState({
-                board: {
+                exam: {
                     data: data,
                     loaded: true,
                 },
@@ -34,7 +34,7 @@ class Board extends React.Component {
                     <Col>
                     <Card>
                         <Card.Header>
-                        <Card.Title as="h5">공지사항</Card.Title>
+                        <Card.Title as="h5">시험문제은행</Card.Title>
                         <span className="d-block m-t-5">
                             use bootstrap <code>Table</code> component
                         </span>
@@ -45,15 +45,15 @@ class Board extends React.Component {
                   <tr>
                     <th>#</th>
                     <th>제목</th>
-                    <th>내용</th>
+                    <th>문제유형</th>
                     <th>등록일시</th>
                   </tr>
                 </thead>
                       <tbody>
                     <List
-                        source="board"
-                        data={this.state.board.data}
-                        loaded={this.state.board.loaded}
+                        source="exam"
+                        data={this.state.exam.data}
+                        loaded={this.state.exam.loaded}
                     />
                     </tbody>
                     </Table>
@@ -66,4 +66,4 @@ class Board extends React.Component {
     }
 };
 
-export default Board;
+export default Exam;

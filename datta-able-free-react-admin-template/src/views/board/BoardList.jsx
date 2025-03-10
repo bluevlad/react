@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Autolinker from 'autolinker';
-import { Row, Col, Card, Table } from 'react-bootstrap';
 
 const BoardList = (props) => {
 
@@ -17,16 +16,12 @@ const BoardList = (props) => {
     };
 
     return (
-                <Table responsive>
-                  <tbody>
                   <tr>
                       <th scope="row">{props.board.board_id}</th>
                       <td>{props.board.board_title}</td>
                       <td><p dangerouslySetInnerHTML={getDescription()}/></td>
                       <td>{props.board.reg_id}({props.board.reg_dt})</td>
                     </tr>
-                    </tbody>
-                </Table>
       )
 
 };

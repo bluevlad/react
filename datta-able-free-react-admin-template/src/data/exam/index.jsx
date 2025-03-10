@@ -1,22 +1,8 @@
 import request from "superagent";
-import localforage from "localforage";
-import moment from "moment";
-
-const expiresDuration = 5;
-const expiresUnit = "seconds";
 
 const baseUrl = "http://localhost:8080/api";
 
-export const examitem = (callback) => {
-
-  localforage.getItem("examitem").then((cache) => {
-    if (cache) {
-      const notExpired = moment().diff(cache.expires) < 0;
-      if (notExpired) {
-        callback(cache.data);
-        return;
-      }
-    }
+export const exam = (callback) => {
 
   const url = new URL(window.location.href);
   const param = new URLSearchParams(url.search);
@@ -24,7 +10,7 @@ export const examitem = (callback) => {
   
       request.get(baseUrl+"/getExamBankItemList?curPage="+page).end((error, response) => {
       let data = [];
-      for (let exam of response.body.exambank) {
+      for (let exam of response.body.exambankItemList) {
         data.push({
           que_id: exam.que_id,
           que_title: exam.que_title,
@@ -38,15 +24,14 @@ export const examitem = (callback) => {
           ans_view5: exam.ans_view5,
           ans_desc: exam.ans_desc,
           is_use: exam.is_use,
+          reg_id: exam.reg_id,
+          reg_dt: exam.reg_dt,
+          upd_id: exam.upd_id,
+          upd_dt: exam.upd_dt,
         });
       }
 
-      localforage.setItem("examitem", {
-        expires: moment().add(expiresDuration, expiresUnit).valueOf(),
-        data,
-      });
-      
       callback(data);
     });
-  });
+
 };

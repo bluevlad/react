@@ -27,6 +27,20 @@ const menuItems = {
           type: 'item',
           icon: 'feather icon-box',
           url: '/board'
+        },
+        {
+          id: 'exam',
+          title: '온라인시험',
+          type: 'item',
+          icon: 'feather icon-box',
+          url: '/exam'
+        },
+        {
+          id: 'locker',
+          title: '사물함예약',
+          type: 'item',
+          icon: 'feather icon-box',
+          url: '/locker'
         }
       ]
     },

@@ -1,8 +1,4 @@
 import request from "superagent";
-import moment from "moment";
-
-const expiresDuration = 5;
-const expiresUnit = "seconds";
 
 const baseUrl = "http://localhost:8080/api";
 
@@ -85,7 +81,7 @@ export const lockerOne = (callback) => {
         box_price: response.body.box_price,
         deposit: response.body.deposit,
         upd_id: response.body.upd_id,
-        upd_dt: moment.unix(response.body.upd_dt).fromNow(),
+        upd_dt: response.body.upd_dt,
       });
 
     callback(data);

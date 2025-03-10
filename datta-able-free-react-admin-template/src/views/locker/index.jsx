@@ -1,15 +1,15 @@
 import React from 'react';
-import {board} from '../../data/board';
+import {locker} from '../../data/locker';
 import List from './List';
 import { Row, Col, Card, Table } from 'react-bootstrap';
 
-class Board extends React.Component {
+class Locker extends React.Component {
 
     constructor () {
         super();
 
         this.state = {
-            board: {
+            locker: {
                 data: [],
                 loaded: false,
             },
@@ -17,9 +17,9 @@ class Board extends React.Component {
     }
 
     componentDidMount () {
-        board((data) => {
+        locker((data) => {
             this.setState({
-                board: {
+                locker: {
                     data: data,
                     loaded: true,
                 },
@@ -44,16 +44,16 @@ class Board extends React.Component {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>제목</th>
-                    <th>내용</th>
-                    <th>등록일시</th>
+                    <th>사물함명</th>
+                    <th>사물함수</th>
+                    <th>변경일시</th>
                   </tr>
                 </thead>
-                      <tbody>
+                <tbody>
                     <List
-                        source="board"
-                        data={this.state.board.data}
-                        loaded={this.state.board.loaded}
+                        source="locker"
+                        data={this.state.locker.data}
+                        loaded={this.state.locker.loaded}
                     />
                     </tbody>
                     </Table>
@@ -66,4 +66,4 @@ class Board extends React.Component {
     }
 };
 
-export default Board;
+export default Locker;
