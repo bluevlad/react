@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BoardList from './BoardList';
+import ExamPagination from './ExamPagination';
 
 class List extends React.Component {
 
@@ -19,11 +19,11 @@ class List extends React.Component {
       <div>
         {
           this.props.data.map(item => {
-            if (this.props.source == 'board') {
+            if (this.props.source == 'ePage') {
               return (
-                <BoardList
-                  key={item.board_id}
-                  board={item}
+                <ExamPagination
+                  key={item.currentPageNo}
+                  ePage={item}
                 />
               )
             }
