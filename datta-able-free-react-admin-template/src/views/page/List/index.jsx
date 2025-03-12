@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import BoardPagination from './BoardPagination';
 import ExamPagination from './ExamPagination';
+import LockerPagination from './LockerPagination';
 
 class List extends React.Component {
 
@@ -19,11 +21,27 @@ class List extends React.Component {
       <div>
         {
           this.props.data.map(item => {
+            if (this.props.source == 'bPage') {
+              return (
+                <BoardPagination
+                  key={item.currentPageNo}
+                  bPage={item}
+                />
+              )
+            }
             if (this.props.source == 'ePage') {
               return (
                 <ExamPagination
                   key={item.currentPageNo}
                   ePage={item}
+                />
+              )
+            }
+            if (this.props.source == 'lPage') {
+              return (
+                <LockerPagination
+                  key={item.currentPageNo}
+                  lPage={item}
                 />
               )
             }

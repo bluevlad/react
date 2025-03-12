@@ -6,81 +6,61 @@ import Card from '../../../components/Card/MainCard';
 
 function LockerPagination (props) {
   let active = props.lPage.currentPageNo;
-  let total = props.lPage.totalPageCount;
+  let totalPage = props.lPage.totalPageCount;
   let disabled = props.lPage.lastPageNo;
+  let totalItem = props.lPage.totalRecordCount;
   let items = [];
   let activeItems = [];
   let disabledItems = [];
 
-  for (let number = 1; number <= total; number++) {
-    items.push(<Pagination.Item key={number} onClick={(number) => paginate(number)}>{number}</Pagination.Item>);
-  }
-
-  for (let number = 1; number <= total; number++) {
-    activeItems.push(
-      <Pagination.Item key={number} active={number === active}>
+  for (let number = 1; number <= totalPage; number++) {
+    items.push(
+      <Pagination.Item key={number}>
         {number}
       </Pagination.Item>
     );
   }
 
-  for (let number = 1; number <= total; number++) {
+  for (let number = 1; number <= totalPage; number++) {
+    activeItems.push(
+      <Pagination.Item key={number} active={number === active} onClick={() => goPage(number)}>
+        {number}
+      </Pagination.Item>
+    );
+  }
+
+  for (let number = 1; number <= totalPage; number++) {
     disabledItems.push(
       <Pagination.Item key={number} disabled={number === disabled}>
         {number}
       </Pagination.Item>
     );
   }
-
-  
-  // Change page
-  const paginate = pageNumbers => {
-    <a href="/locker?page={pageNumbers}">
-    </a>
-  }
+  const goPage = (num) => {
+    alert(num);
+    for (let number = 1; number <= totalPage; number++) {
+      activeItems.push(
+      <Pagination.Item key={number} active={number === num} onClick={() => goPage(number)}>
+        {number}
+      </Pagination.Item>
+      );
+    }
+  };
 
   return (
     <React.Fragment>
       <Row>
         <Col>
           <Card title="Pagination">
-            <Pagination>{items}</Pagination>
-            <h5 className="mt-5">Working With Icons</h5>
+            <h5 className="mt-5">사물함 Page({totalItem})</h5>
             <hr />
             <Pagination>
               <Pagination.First />
               <Pagination.Prev />
-              {items}
+              <Pagination>{disabledItems}</Pagination>
               <Pagination.Next />
               <Pagination.Last />
             </Pagination>
-            <h5 className="mt-5">More Options</h5>
-            <hr />
-            <div className="table-responsive">
-              <Pagination>
-                <Pagination.Prev />
-                <Pagination.Item>{1}</Pagination.Item>
-                <Pagination.Ellipsis />
-                <Pagination.Item>{11}</Pagination.Item>
-                <Pagination.Item active>{12}</Pagination.Item>
-                <Pagination.Item>{13}</Pagination.Item>
-                <Pagination.Ellipsis />
-                <Pagination.Item>{20}</Pagination.Item>
-                <Pagination.Next />
-              </Pagination>
-            </div>
-
-            <h5 className="mt-5">Active</h5>
-            <hr />
-            <Pagination>{activeItems}</Pagination>
-            <h5 className="mt-5">Disabled</h5>
-            <hr />
-            <Pagination>{disabledItems}</Pagination>
-            <h5 className="mt-5">Sizing</h5>
-            <hr />
-            <Pagination>{items}</Pagination>
-            <Pagination size="lg">{items}</Pagination>
-            <Pagination size="sm">{items}</Pagination>
           </Card>
         </Col>
       </Row>
