@@ -4,10 +4,6 @@ import ExamList from '../ExamList';
 
 class List extends React.Component {
 
-    shouldComponentUpdate (nextProps) {
-      return this.props.loaded !== nextProps.loaded;
-    }
-
     render () {
 
         if (!this.props.data.length) {
@@ -34,13 +30,6 @@ class List extends React.Component {
         )
     }
 
-};
-
-List.propsTypes = {
-    source: PropTypes.string.isRequired,
-    getData: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
-    loaded: PropTypes.bool.isRequired,
 };
 
 export default List;

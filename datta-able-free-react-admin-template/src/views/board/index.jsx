@@ -1,6 +1,6 @@
 import React from 'react';
 import {board} from '../../data/board';
-import List from './List';
+import List from './list';
 import { Row, Col, Card, Table } from 'react-bootstrap';
 
 class Board extends React.Component {

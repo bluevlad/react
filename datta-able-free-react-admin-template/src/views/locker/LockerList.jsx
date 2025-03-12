@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const LockerList = (props) => {
 
@@ -12,10 +11,6 @@ const LockerList = (props) => {
                     </tr>
       )
 
-};
-
-LockerList.propTypes = {
-    locker: PropTypes.object.isRequired,
 };
 
 export default LockerList;

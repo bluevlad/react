@@ -1,12 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import LockerList from '../LockerList';
 
 class List extends React.Component {
-
-    shouldComponentUpdate (nextProps) {
-      return this.props.loaded !== nextProps.loaded;
-    }
 
     render () {
 
@@ -34,13 +29,6 @@ class List extends React.Component {
         )
     }
 
-};
-
-List.propsTypes = {
-    source: PropTypes.string.isRequired,
-    getData: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
-    loaded: PropTypes.bool.isRequired,
 };
 
 export default List;

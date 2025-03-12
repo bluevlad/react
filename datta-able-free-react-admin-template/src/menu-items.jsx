@@ -29,6 +29,13 @@ const menuItems = {
           url: '/board'
         },
         {
+          id: 'boardView',
+          title: 'Board View',
+          type: 'item',
+          icon: 'feather icon-box',
+          url: '/board/view'
+        },
+        {
           id: 'exam',
           title: '온라인시험',
           type: 'item',

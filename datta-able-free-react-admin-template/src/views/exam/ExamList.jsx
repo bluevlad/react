@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Autolinker from 'autolinker';
 
 const ExamList = (props) => {
@@ -24,10 +23,6 @@ const ExamList = (props) => {
                     </tr>
       )
 
-};
-
-ExamList.propTypes = {
-    exam: PropTypes.object.isRequired,
 };
 
 export default ExamList;
