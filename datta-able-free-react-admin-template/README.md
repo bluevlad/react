@@ -21,7 +21,7 @@ npm install
 npm start
 ```
 
-back-end githyub
+back-end github
 
 https://github.com/bluevlad/Java.git
 
