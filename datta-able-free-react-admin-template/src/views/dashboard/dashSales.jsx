@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Table } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 
 class dashSales extends React.Component {
 
@@ -9,7 +9,7 @@ render () {
     <Row>
         {
           this.props.data.map(item => {
-            if (this.props.source == 'dashboard') {
+            if (this.props.source == 'sales') {
               return (
             <Col key={item.index} xl={6} xxl={4}>
               <Card>

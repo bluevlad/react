@@ -20,6 +20,7 @@ export const board = (callback) => {
         reg_dt: bd.reg_dt,
         upd_id: bd.upd_id,
         upd_dt: bd.upd_dt,
+        board_avata: "avatar"+bd.board_id,
       });
     }
 

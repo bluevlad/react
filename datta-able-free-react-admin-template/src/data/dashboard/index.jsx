@@ -2,7 +2,7 @@ import request from "superagent";
 
 const baseUrl = "http://localhost:8080/api";
 
-export const dashboard = (callback) => {
+export const sales = (callback) => {
 
   request.get(baseUrl+"/getSales").end((error, response) => {
     let data = [];
