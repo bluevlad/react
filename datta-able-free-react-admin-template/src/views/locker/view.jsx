@@ -1,13 +1,13 @@
 import React from 'react';
-import { boardOne } from '../../data/board';
-import BoardView from './BoardView';
+import { lockerOne } from '../../data/locker';
+import LockerView from './LockerView';
 
 class View extends React.Component {
 
   constructor () {
     super();
     this.state = {
-      boardOne: {
+      lockerOne: {
         data: [],
         loaded: false,
       },
@@ -15,9 +15,9 @@ class View extends React.Component {
   }
 
   componentDidMount () {
-    boardOne((data) => {
+    lockerOne((data) => {
       this.setState({
-        boardOne: {
+        lockerOne: {
           data: data,
           loaded: true,
         },
@@ -26,13 +26,15 @@ class View extends React.Component {
   }
 
   render () {
+
     return (
-      <BoardView
-        source="boardOne"
-        data={this.state.boardOne.data}
-        loaded={this.state.boardOne.loaded}
+      <LockerView
+        source="lockerOne"
+        data={this.state.lockerOne.data}
+        loaded={this.state.lockerOne.loaded}
       />
     )
+
   };
   
 };

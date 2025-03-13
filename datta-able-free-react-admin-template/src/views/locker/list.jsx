@@ -1,14 +1,15 @@
 import React from 'react';
-import {board} from '../../data/board';
-import BoardList from './BoardList';
+import {locker} from '../../data/locker';
+import LockerList from './LockerList';
 import { Row, Col, Card, Table } from 'react-bootstrap';
 
 class List extends React.Component {
 
   constructor () {
     super();
+
     this.state = {
-      board: {
+      locker: {
         data: [],
         loaded: false,
       },
@@ -16,9 +17,9 @@ class List extends React.Component {
   }
 
   componentDidMount () {
-    board((data) => {
+    locker((data) => {
       this.setState({
-        board: {
+        locker: {
           data: data,
           loaded: true,
         },
@@ -27,6 +28,7 @@ class List extends React.Component {
   }
 
   render () {
+  
     return (
       <React.Fragment>
         <Row>
@@ -36,20 +38,20 @@ class List extends React.Component {
                 <Card.Title as="h5">공지사항</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Table responsive hover>
+                <Table responsive>
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>제목</th>
-                      <th>등록자</th>
-                      <th>등록일시</th>
+                      <th>사물함명</th>
+                      <th>사물함수</th>
+                      <th>변경일시</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <BoardList
-                    source="board"
-                    data={this.state.board.data}
-                    loaded={this.state.board.loaded}
+                    <LockerList
+                      source="locker"
+                      data={this.state.locker.data}
+                      loaded={this.state.locker.loaded}
                     />
                   </tbody>
                 </Table>
@@ -59,8 +61,9 @@ class List extends React.Component {
         </Row>
       </React.Fragment>
     )
+
   }
-  
+
 };
 
 export default List;

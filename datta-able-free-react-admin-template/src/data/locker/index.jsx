@@ -69,19 +69,19 @@ export const lockerOne = (callback) => {
   request.get(baseUrl+"/getLocker?boxCd="+id).end((error, response) => {
     let data = [];
       data.push({
-        box_cd: response.body.box_cd,
-        box_nm: response.body.box_nm,
-        box_count: parseInt(response.body.box_count),
-        not_cnt: parseInt(response.body.not_cnt),
-        row_num: parseInt(response.body.row_num),
-        row_count: parseInt(response.body.row_count),
-        use_cnt: parseInt(response.body.use_cnt),
-        start_num: response.body.start_num,
-        end_num: parseInt(response.body.end_num),
-        box_price: response.body.box_price,
-        deposit: response.body.deposit,
-        upd_id: response.body.upd_id,
-        upd_dt: response.body.upd_dt,
+        box_cd: response.body.item.box_cd,
+        box_nm: response.body.item.box_nm,
+        box_count: parseInt(response.body.item.box_count),
+        not_cnt: parseInt(response.body.item.not_cnt),
+        row_num: parseInt(response.body.item.row_num),
+        row_count: parseInt(response.body.item.row_count),
+        use_cnt: parseInt(response.body.item.use_cnt),
+        start_num: response.body.item.start_num,
+        end_num: parseInt(response.body.item.end_num),
+        box_price: response.body.item.box_price,
+        deposit: response.body.item.deposit,
+        upd_id: response.body.item.upd_id,
+        upd_dt: response.body.item.upd_dt,
       });
 
     callback(data);

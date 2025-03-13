@@ -57,8 +57,8 @@ const routes = [
       },
       {
         exact: 'true',
-        path: '/board',
-        element: lazy(() => import('./views/board'))
+        path: '/board/list',
+        element: lazy(() => import('./views/board/list'))
       },
       {
             exact: 'true',
@@ -67,13 +67,23 @@ const routes = [
       },
       {
         exact: 'true',
-        path: '/exam',
-        element: lazy(() => import('./views/exam'))
+        path: '/exam/list',
+        element: lazy(() => import('./views/exam/list'))
       },
       {
         exact: 'true',
-        path: '/locker',
-        element: lazy(() => import('./views/locker'))
+        path: '/exam/view',
+        element: lazy(() => import('./views/exam/view'))
+      },
+      {
+        exact: 'true',
+        path: '/locker/list',
+        element: lazy(() => import('./views/locker/list'))
+      },
+      {
+        exact: 'true',
+        path: '/locker/view',
+        element: lazy(() => import('./views/locker/view'))
       },
       {
         exact: 'true',

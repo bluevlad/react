@@ -36,6 +36,38 @@ export const exam = (callback) => {
 
 };
 
+export const examOne = (callback) => {
+
+  const url = new URL(window.location.href);
+  const param = new URLSearchParams(url.search);
+  const id = param.get("id");
+
+  request.get(baseUrl+"/getExamBankItem?queId="+id).end((error, response) => {
+    let data = [];
+      data.push({
+        que_id: response.body.examBankItem.que_id,
+        que_title: response.body.examBankItem.que_title,
+        que_count: parseInt(response.body.examBankItem.que_count),
+        pass_ans: response.body.examBankItem.pass_ans,
+        que_type: response.body.examBankItem.que_type,
+        ans_view1: response.body.examBankItem.ans_view1,
+        ans_view2: response.body.examBankItem.ans_view2,
+        ans_view3: response.body.examBankItem.ans_view3,
+        ans_view4: response.body.examBankItem.ans_view4,
+        ans_view5: response.body.examBankItem.ans_view5,
+        ans_desc: response.body.examBankItem.ans_desc,
+        is_use: response.body.examBankItem.is_use,
+        reg_id: response.body.examBankItem.reg_id,
+        reg_dt: response.body.examBankItem.reg_dt,
+        upd_id: response.body.examBankItem.upd_id,
+        upd_dt: response.body.examBankItem.upd_dt,
+     });
+
+    callback(data);
+  });
+
+};
+
 export const ePage = (callback) => {
 
   const url = new URL(window.location.href);

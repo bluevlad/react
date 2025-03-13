@@ -26,28 +26,21 @@ const menuItems = {
           title: 'Board',
           type: 'item',
           icon: 'feather icon-box',
-          url: '/board'
-        },
-        {
-          id: 'boardView',
-          title: 'Board View',
-          type: 'item',
-          icon: 'feather icon-box',
-          url: '/board/view'
+          url: '/board/list'
         },
         {
           id: 'exam',
           title: '온라인시험',
           type: 'item',
           icon: 'feather icon-box',
-          url: '/exam'
+          url: '/exam/list'
         },
         {
           id: 'locker',
           title: '사물함예약',
           type: 'item',
           icon: 'feather icon-box',
-          url: '/locker'
+          url: '/locker/list'
         },
         {
           id: 'page',

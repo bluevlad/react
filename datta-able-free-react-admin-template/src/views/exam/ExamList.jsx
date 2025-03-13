@@ -1,27 +1,38 @@
 import React from 'react';
-import Autolinker from 'autolinker';
+import { Link } from 'react-router-dom';
 
-const ExamList = (props) => {
+class ExamList extends React.Component {
 
-    let getDescription = () => {
-        const safeDescription = props.exam.ans_desc;
-        return {
-            __html: Autolinker.link(safeDescription, {
-                email: false,
-                phone: false,
-                twitter: false,
-            }),
-        };
-    };
+  render () {
+
+    if (!this.props.data.length) {
+        return (
+          <div>문제은행 정보를 가져오지 못했습니다 :</div>
+        )
+    }
 
     return (
-                  <tr>
-                      <th scope="row">{props.exam.que_id}</th>
-                      <td>{props.exam.que_title}</td>
-                      <td>{props.exam.que_type}</td>
-                      <td>{props.exam.reg_id}({props.exam.reg_dt})</td>
-                    </tr>
-      )
+      <div>
+      {
+        this.props.data.map(item => {
+          if (this.props.source == 'exam') {
+            return (
+              <tr>
+                <th scope="row">{item.que_id}</th>
+                <td>
+                  <Link to={`/exam/view?id=${item.que_id}`}>{item.que_title}</Link>
+                </td>
+                <td>{item.que_type}</td>
+                <td>{item.reg_id}({item.reg_dt})</td>
+              </tr>
+            )
+          }
+        })
+      }
+      </div>
+    )
+
+  }
 
 };
 

@@ -1,13 +1,13 @@
 import React from 'react';
-import { boardOne } from '../../data/board';
-import BoardView from './BoardView';
+import { examOne } from '../../data/exam';
+import ExamView from './ExamView';
 
 class View extends React.Component {
 
   constructor () {
     super();
     this.state = {
-      boardOne: {
+      examOne: {
         data: [],
         loaded: false,
       },
@@ -15,9 +15,9 @@ class View extends React.Component {
   }
 
   componentDidMount () {
-    boardOne((data) => {
+    examOne((data) => {
       this.setState({
-        boardOne: {
+        examOne: {
           data: data,
           loaded: true,
         },
@@ -26,13 +26,15 @@ class View extends React.Component {
   }
 
   render () {
+
     return (
-      <BoardView
-        source="boardOne"
-        data={this.state.boardOne.data}
-        loaded={this.state.boardOne.loaded}
+      <ExamView
+        source="examOne"
+        data={this.state.examOne.data}
+        loaded={this.state.examOne.loaded}
       />
     )
+    
   };
   
 };
