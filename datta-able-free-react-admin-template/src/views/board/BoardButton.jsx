@@ -2,8 +2,6 @@ import React from 'react';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
-import Card from '../../components/Card/MainCard';
-
 const BoardButton = () => {
 
   const navigate = useNavigate();
@@ -12,27 +10,17 @@ const BoardButton = () => {
     navigate("/board/write");
   };
 
-  const buttonVariants = ['primary'];
-
-  const basicButtons = buttonVariants.map((variant, idx) => {
-    const tooltip = (
-      <Tooltip className="mb-2" id="tooltip">
-        {variant}
-      </Tooltip>
-    );
-    return (
-      <OverlayTrigger key={idx} placement="top" overlay={tooltip}>
-        <Button variant={variant} className="text-capitalize" onClick={goWrite}>
-          WRITE
+  return (
+    <div className="d-flex justify-content-end">
+      <OverlayTrigger
+        placement="top"
+        overlay={<Tooltip className="mb-2" id="tooltip">등록</Tooltip>}
+      >
+        <Button variant="primary" className="text-capitalize" onClick={goWrite}>
+          등록
         </Button>
       </OverlayTrigger>
-    );
-  });
-
-  return (
-          <Card>
-        {basicButtons}
-          </Card>
+    </div>
   );
 
 };

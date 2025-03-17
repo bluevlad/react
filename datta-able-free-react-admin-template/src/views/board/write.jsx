@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import { WriteButton } from './WriteButton';
 
 class Write extends React.Component {

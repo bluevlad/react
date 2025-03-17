@@ -13,7 +13,7 @@ function withRouter(Component) {
   };
 }
 
-class View extends React.Component {
+class Edit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,7 +49,7 @@ class View extends React.Component {
     this.props.navigate("/board/write"); // 🔹 `this.props.navigate` 사용
   }
 
-  goEdit(boardId) {
+  goEdit() {
     this.props.navigate("/board/edit"); // 🔹 `this.props.navigate` 사용
   }
 
@@ -80,7 +80,7 @@ class View extends React.Component {
                 placement="top"
                 overlay={<Tooltip className="mb-2" id="tooltip">수정</Tooltip>}
               >
-                <Button variant="warning" className="text-capitalize" onClick={this.goEdit()}>
+                <Button variant="warning" className="text-capitalize" onClick={this.goEdit}>
                   수정
                 </Button>
               </OverlayTrigger>
@@ -109,4 +109,4 @@ class View extends React.Component {
 }
 
 // 🔹 `withRouter`로 컴포넌트 감싸기
-export default withRouter(View);
+export default withRouter(Edit);
