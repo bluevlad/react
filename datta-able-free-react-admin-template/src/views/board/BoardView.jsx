@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import Autolinker from 'autolinker';
 
 import Card from '../../components/Card/MainCard';
 

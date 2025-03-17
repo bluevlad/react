@@ -21,6 +21,10 @@ npm install
 npm start
 ```
 
+add npm install superagent
+
+add npm install axios
+
 back-end github
 
 https://github.com/bluevlad/Java.git

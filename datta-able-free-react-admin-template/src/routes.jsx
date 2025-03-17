@@ -67,6 +67,11 @@ const routes = [
       },
       {
         exact: 'true',
+        path: '/board/write',
+        element: lazy(() => import('./views/board/write'))
+      },
+      {
+        exact: 'true',
         path: '/exam/list',
         element: lazy(() => import('./views/exam/list'))
       },

@@ -1,6 +1,5 @@
 import request from "superagent";
-
-const baseUrl = "http://localhost:8080/api";
+import { BASE_URL } from "../../services/api";
 
 export const lPage = (callback) => {
 
@@ -8,7 +7,7 @@ export const lPage = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
 
-  request.get(baseUrl+"/getLockerList?curPage="+page).end((error, response) => {
+  request.get(BASE_URL+"/getLockerList?curPage="+page).end((error, response) => {
     let data = [];
       data.push({
         currentPageNo: response.body.paginationInfo.currentPageNo,
@@ -34,7 +33,7 @@ export const locker = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
 
-  request.get(baseUrl+"/getLockerList?curPage="+page).end((error, response) => {
+  request.get(BASE_URL+"/getLockerList?curPage="+page).end((error, response) => {
     let data = [];
     
     for (let loc of response.body.lockers) {
@@ -66,7 +65,7 @@ export const lockerOne = (callback) => {
   const param = new URLSearchParams(url.search);
   const id = param.get("id");
 
-  request.get(baseUrl+"/getLocker?boxCd="+id).end((error, response) => {
+  request.get(BASE_URL+"/getLocker?boxCd="+id).end((error, response) => {
     let data = [];
       data.push({
         box_cd: response.body.item.box_cd,

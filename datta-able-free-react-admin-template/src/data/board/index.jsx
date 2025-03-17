@@ -1,6 +1,5 @@
-import request from "superagent";
-
-const baseUrl = "http://localhost:8080/api";
+import superagent from "superagent";
+import { BASE_URL } from "../../services/api";
 
 export const board = (callback) => {
 
@@ -8,7 +7,7 @@ export const board = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
 
-  request.get(baseUrl+"/getBoardList?curPage="+page).end((error, response) => {
+  superagent.get(BASE_URL+"/getBoardList?curPage="+page).end((error, response) => {
     let data = [];
     for (let bd of response.body.boardList) {
       data.push({
@@ -35,7 +34,7 @@ export const boardOne = (callback) => {
   const param = new URLSearchParams(url.search);
   const id = param.get("id");
 
-  request.get(baseUrl+"/getBoard?boardId="+id).end((error, response) => {
+  superagent.get(BASE_URL+"/getBoard?boardId="+id).end((error, response) => {
     let data = [];
       data.push({
         board_id: response.body.boardItem.board_id,
@@ -59,7 +58,7 @@ export const bPage = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
 
-  request.get(baseUrl+"/getBoardList?curPage="+page).end((error, response) => {
+  superagent.get(BASE_URL+"/getBoardList?curPage="+page).end((error, response) => {
     let data = [];
       data.push({
         currentPageNo: response.body.paginationInfo.currentPageNo,

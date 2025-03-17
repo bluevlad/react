@@ -1,10 +1,9 @@
 import request from "superagent";
-
-const baseUrl = "http://localhost:8080/api";
+import { BASE_URL } from "../../services/api";
 
 export const sales = (callback) => {
 
-  request.get(baseUrl+"/getSales").end((error, response) => {
+  request.get(BASE_URL+"/getSales").end((error, response) => {
     let data = [];
     for (let ds of response.body.dashSalesData) {
       data.push({

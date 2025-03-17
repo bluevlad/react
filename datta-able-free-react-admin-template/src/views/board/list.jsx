@@ -1,6 +1,8 @@
 import React from 'react';
-import {board} from '../../data/board';
+import { board, bPage } from '../../data/board';
 import BoardList from './BoardList';
+import BoardPage from './BoardPage';
+import BoardButton from './BoardButton';
 import { Row, Col, Card, Table } from 'react-bootstrap';
 
 class List extends React.Component {
@@ -9,6 +11,10 @@ class List extends React.Component {
     super();
     this.state = {
       board: {
+        data: [],
+        loaded: false,
+      },
+      bPage: {
         data: [],
         loaded: false,
       },
@@ -24,7 +30,15 @@ class List extends React.Component {
         },
       });
     });
-  }
+    bPage((data) => {
+      this.setState({
+        bPage: {
+          data: data,
+          loaded: true,
+        },
+      });
+    });
+   }
 
   render () {
     return (
@@ -34,6 +48,7 @@ class List extends React.Component {
             <Card>
               <Card.Header>
                 <Card.Title as="h5">공지사항</Card.Title>
+                <BoardButton/>
               </Card.Header>
               <Card.Body>
                 <Table responsive hover>
@@ -54,6 +69,13 @@ class List extends React.Component {
                   </tbody>
                 </Table>
               </Card.Body>
+              <Card.Footer>
+                <BoardPage
+                  source="bPage"
+                  data={this.state.bPage.data}
+                  loaded={this.state.bPage.loaded}
+                />
+              </Card.Footer>
             </Card>
           </Col>
         </Row>
