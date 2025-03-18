@@ -1,5 +1,7 @@
 import React from "react";
-import { Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import superagent from "superagent";
+import { BASE_URL } from "../../services/api";
+import { Form, Button, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { boardOne } from "../../data/board";
 
@@ -18,17 +20,17 @@ class View extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      boardId: "",
       boardOne: {
         data: [],
         loaded: false,
       },
     };
 
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
     // `goWrite` 함수 수정
     this.goList = this.goList.bind(this);
-    this.goWrite = this.goWrite.bind(this);
     this.goEdit = this.goEdit.bind(this);
-    this.goDelete = this.goDelete.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +40,7 @@ class View extends React.Component {
           data: data,
           loaded: true,
         },
+        boardId: data[0]?.board_id || "",
       });
     });
   }
@@ -46,19 +49,30 @@ class View extends React.Component {
     this.props.navigate("/board/list");
   }
 
-  goWrite() {
-    this.props.navigate("/board/write");
-  }
-
   goEdit(boardId) {
     this.props.navigate("/board/edit?id="+boardId);
   }
 
-  goDelete(boardId) {
-    this.props.navigate("/board/delete?id="+boardId);
+  handleFormSubmit(e) {
+    e.preventDefault();
+
+    superagent
+    .post(BASE_URL + "/deleteBoard")
+    .type("form") // application/x-www-form-urlencoded 타입 설정
+    .send({
+      boardId: this.state.boardId,
+    }) // 자동으로 URL-encoded 처리
+    .then((res) => {
+      alert("Response: " + res.text);
+      this.goList(); // 저장 후 목록으로 이동
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   }
 
   render() {
+
     return (
       <React.Fragment>
         <Row>
@@ -66,6 +80,12 @@ class View extends React.Component {
             <Card title={this.state.boardOne.data[0]?.board_title} isOption>
               <p dangerouslySetInnerHTML={ {__html : this.state.boardOne.data[0]?.board_memo} }/>
             </Card>
+            <Form onSubmit={this.handleFormSubmit}>
+              <Form.Control
+                  name="boardId"
+                  type="hidden"
+                  value={this.state.boardOne.data[0]?.board_id}
+              />
             <div className="d-flex justify-content-end">
               <OverlayTrigger
                 placement="top"
@@ -94,14 +114,15 @@ class View extends React.Component {
                 <Button 
                   variant="danger" 
                   className="text-capitalize" 
-                  onClick={() => this.goDelete(this.state.boardOne.data[0]?.board_id)}
+                  type="submit"
                 >
                 삭제
                 </Button>
               </OverlayTrigger>
             </div>
-          </Col>
-        </Row>
+            </Form>
+            </Col>
+          </Row>
       </React.Fragment>
     );
   }
