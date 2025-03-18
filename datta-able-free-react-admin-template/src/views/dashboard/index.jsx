@@ -1,10 +1,7 @@
 import React from 'react';
-import { Row, Col, Card, Table, Tabs, Tab } from 'react-bootstrap';
+import { Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
 
-import { sales } from '../../data/dashboard';
-import { board } from '../../data/board';
-import { exam } from '../../data/exam';
-import { locker } from '../../data/locker';
+import { sales, board, exam, locker } from './data';
 import DashSales from './dashSales';
 import TabContent from './tabContent';
 
@@ -12,58 +9,33 @@ class DashDefault extends React.Component {
 
   constructor () {
     super();
-
     this.state = {
-      sales: {
-        data: [],
-        loaded: false,
-      },
-      board: {
-        data: [],
-        loaded: false,
-      },
-      exam: {
-        data: [],
-        loaded: false,
-      },
-      locker: {
-        data: [],
-        loaded: false,
-      },
+      sales: { data: [], loaded: false },
+      board: { data: [], loaded: false },
+      exam: { data: [], loaded: false },
+      locker: { data: [], loaded: false },
     };
   }
 
   componentDidMount () {
     sales((data) => {
       this.setState({
-        sales: {
-          data: data,
-          loaded: true,
-        },
+        sales: { data: data, loaded: true },
       });
     });
     board((data) => {
       this.setState({
-        board: {
-          data: data,
-          loaded: true,
-        },
+        board: { data: data, loaded: true },
       });
     });
     exam((data) => {
       this.setState({
-        exam: {
-          data: data,
-          loaded: true,
-        },
+        exam: { data: data, loaded: true },
       });
     });
     locker((data) => {
       this.setState({
-        locker: {
-          data: data,
-          loaded: true,
-        },
+        locker: { data: data, loaded: true },
       });
     });
   }
