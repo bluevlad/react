@@ -58,7 +58,9 @@ export const WriteButton = () => {
       <Form.Label>Password</Form.Label>
       <Form.Control type="password" placeholder="Password" />
     </Form.Group>
+    <div className="d-flex justify-content-end">
     <Button variant="primary" onClick={handleFormSubmit}>등록</Button>
+    </div>
     </Form>
   );
 

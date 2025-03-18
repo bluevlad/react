@@ -11,7 +11,7 @@ render () {
           this.props.data.map(item => {
             if (this.props.source == 'sales') {
               return (
-            <Col key={item.index} xl={6} xxl={4}>
+            <Col key={item.id} xl={6} xxl={4}>
               <Card>
                 <Card.Body>
                   <h6 className="mb-4">{item.title}</h6>

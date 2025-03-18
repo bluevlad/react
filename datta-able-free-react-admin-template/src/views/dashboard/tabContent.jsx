@@ -5,7 +5,7 @@ import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../assets/images/user/avatar-2.jpg';
 import avatar3 from '../../assets/images/user/avatar-3.jpg';
 
-class tabContent extends React.Component {
+class TabContent extends React.Component {
 
   render () {
     return (
@@ -14,7 +14,7 @@ class tabContent extends React.Component {
         this.props.data.map(item => {
           if (this.props.source == 'board') {
             return (
-              <div className="d-flex friendlist-box align-items-center justify-content-center m-b-20">
+              <div key={item.board_id} className="d-flex friendlist-box align-items-center justify-content-center m-b-20">
                 <div className="m-r-10 photo-table flex-shrink-0">
                   <Link to="#">
                     <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" />
@@ -32,7 +32,7 @@ class tabContent extends React.Component {
           }
           if (this.props.source == 'exam') {
             return (
-              <div className="d-flex friendlist-box align-items-center justify-content-center m-b-20">
+              <div key={item.que_id} className="d-flex friendlist-box align-items-center justify-content-center m-b-20">
                 <div className="m-r-10 photo-table flex-shrink-0">
                   <Link to="#">
                     <img className="rounded-circle" style={{ width: '40px' }} src={avatar2} alt="activity-user" />
@@ -50,7 +50,7 @@ class tabContent extends React.Component {
           }
           if (this.props.source == 'locker') {
             return (
-              <div className="d-flex friendlist-box align-items-center justify-content-center m-b-20">
+              <div key={item.box_cd} className="d-flex friendlist-box align-items-center justify-content-center m-b-20">
                 <div className="m-r-10 photo-table flex-shrink-0">
                   <Link to="#">
                     <img className="rounded-circle" style={{ width: '40px' }} src={avatar3} alt="activity-user" />
@@ -74,4 +74,4 @@ class tabContent extends React.Component {
 
 };
 
-export default tabContent;
+export default TabContent;

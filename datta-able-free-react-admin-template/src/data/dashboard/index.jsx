@@ -6,7 +6,9 @@ export const sales = (callback) => {
   request.get(BASE_URL+"/getSales").end((error, response) => {
     let data = [];
     for (let ds of response.body.dashSalesData) {
+        amount: ds.amount,
       data.push({
+        id: ds.id,
         amount: ds.amount,
         icon: ds.icon,
         title: ds.title,

@@ -2,7 +2,8 @@ import React from "react";
 import { Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { boardOne } from "../../data/board";
-import BoardView from "./BoardView";
+
+import Card from '../../components/Card/MainCard';
 
 // 🔹 `withRouter` 유틸 함수 (React Router v6에서 사용) 
 // navigate를 props로 전달
@@ -42,19 +43,19 @@ class View extends React.Component {
   }
 
   goList() {
-    this.props.navigate("/board/list"); // 🔹 `this.props.navigate` 사용
+    this.props.navigate("/board/list");
   }
 
   goWrite() {
-    this.props.navigate("/board/write"); // 🔹 `this.props.navigate` 사용
+    this.props.navigate("/board/write");
   }
 
   goEdit(boardId) {
-    this.props.navigate("/board/edit"); // 🔹 `this.props.navigate` 사용
+    this.props.navigate("/board/edit?id="+boardId);
   }
 
-  goDelete() {
-    this.props.navigate("/board/delete"); // 🔹 `this.props.navigate` 사용
+  goDelete(boardId) {
+    this.props.navigate("/board/delete?id="+boardId);
   }
 
   render() {
@@ -62,11 +63,9 @@ class View extends React.Component {
       <React.Fragment>
         <Row>
           <Col>
-            <BoardView
-              source="boardOne"
-              data={this.state.boardOne.data}
-              loaded={this.state.boardOne.loaded}
-            />
+            <Card title={this.state.boardOne.data[0]?.board_title} isOption>
+              <p dangerouslySetInnerHTML={ {__html : this.state.boardOne.data[0]?.board_memo} }/>
+            </Card>
             <div className="d-flex justify-content-end">
               <OverlayTrigger
                 placement="top"
@@ -80,7 +79,11 @@ class View extends React.Component {
                 placement="top"
                 overlay={<Tooltip className="mb-2" id="tooltip">수정</Tooltip>}
               >
-                <Button variant="warning" className="text-capitalize" onClick={this.goEdit()}>
+                <Button
+                  variant="warning"
+                  className="text-capitalize"
+                  onClick={() => this.goEdit(this.state.boardOne.data[0]?.board_id)}
+                >
                   수정
                 </Button>
               </OverlayTrigger>
@@ -88,16 +91,12 @@ class View extends React.Component {
                 placement="top"
                 overlay={<Tooltip className="mb-2" id="tooltip">삭제</Tooltip>}
               >
-                <Button variant="danger" className="text-capitalize" onClick={this.goDelete}>
+                <Button 
+                  variant="danger" 
+                  className="text-capitalize" 
+                  onClick={() => this.goDelete(this.state.boardOne.data[0]?.board_id)}
+                >
                 삭제
-                </Button>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="top"
-                overlay={<Tooltip className="mb-2" id="tooltip">등록</Tooltip>}
-              >
-                <Button variant="primary" className="text-capitalize" onClick={this.goWrite}>
-                  등록
                 </Button>
               </OverlayTrigger>
             </div>
