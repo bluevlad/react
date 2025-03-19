@@ -2,7 +2,7 @@ import React from 'react';
 import superagent from "superagent";
 import { BASE_URL } from "../../services/api";
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
-import { boardOne } from "../../data/board";
+import { boardOne } from "./data";
 import { useNavigate } from "react-router-dom";
 
 // 🔹 `withRouter` 유틸 함수 (React Router v6에서 사용) 
@@ -43,7 +43,7 @@ class Edit extends React.Component {
           loaded: true,
         },
         boardId: data[0]?.board_id || "",
-        regId: data[0]?.reg_id || "",
+        regId: data[0]?.reg_id || "admin",
         updId: data[0]?.upd_id || "",
         isUse: data[0]?.is_use || "",
         boardTitle: data[0]?.board_title || "",
@@ -75,7 +75,8 @@ class Edit extends React.Component {
         boardMemo: this.state.boardMemo,
       }) // 자동으로 URL-encoded 처리
       .then((res) => {
-        alert("Response: " + res.text);
+        alert("저장되었습니다");
+//        alert("Response: " + res.text);
         this.goList(); // 저장 후 목록으로 이동
       })
       .catch((err) => {
