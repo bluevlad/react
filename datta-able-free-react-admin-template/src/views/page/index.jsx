@@ -1,87 +1,62 @@
-import React from 'react';
-import {bPage} from '../../data/board';
-import {ePage} from '../../data/exam';
-import {lPage} from '../../data/locker';
-import List from './List';
-import { Row, Col, Card } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Pagination } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { bPage } from './data';
 
-class Page extends React.Component {
+import Card from '../../components/Card/MainCard';
 
-  constructor () {
-    super();
+const Page = () => {
+  const [paginationData, setPaginationData] = useState({ data: [], loaded: false });
+  const [active, setActive] = useState(2); // 현재 페이지
+  const totalPage = 5; // 전체 페이지 수
+  const navigate = useNavigate();
 
-    this.state = {
-      bPage: {
-        data: [],
-        loaded: false,
-      },
-      ePage: {
-        data: [],
-        loaded: false,
-      },
-      lPage: {
-        data: [],
-        loaded: false,
-      },
+  // 🔹 비동기 데이터 로드
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await bPage();
+        setPaginationData({ data, loaded: true });
+      } catch (error) {
+        console.error("페이지 데이터 로드 오류:", error);
+      }
     };
-  }
+    fetchData();
+  }, []);
 
-  componentDidMount () {
-    bPage((data) => {
-      this.setState({
-        bPage: {
-          data: data,
-          loaded: true,
-        },
-      });
-    });
-    ePage((data) => {
-      this.setState({
-        ePage: {
-          data: data,
-          loaded: true,
-        },
-      });
-    });
-    lPage((data) => {
-      this.setState({
-        lPage: {
-          data: data,
-          loaded: true,
-        },
-      });
-    });
-  }
+  return (
+    <React.Fragment>
+      <Row>
+        <Col>
+          <Card>
+            <h5 className="mt-3">게시판 Page</h5>
+            <hr />
+            <Pagination>
+              <Pagination.First onClick={() => setActive(1)} />
+              <Pagination.Prev onClick={() => setActive(Math.max(1, active - 1))} />
 
-  render () {
-    return (
-      <React.Fragment>
-        <Row>
-          <Col>
-            <Card>
-              <Card.Footer>
-              <List
-                    source="bPage"
-                    data={this.state.bPage.data}
-                    loaded={this.state.bPage.loaded}
-              />
-              <List
-                    source="ePage"
-                    data={this.state.ePage.data}
-                    loaded={this.state.ePage.loaded}
-              />
-              <List
-                    source="lPage"
-                    data={this.state.lPage.data}
-                    loaded={this.state.lPage.loaded}
-              />
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </React.Fragment>
-    )
-  }
+              {/* 페이지 숫자 버튼 */}
+              {[...Array(totalPage)].map((_, index) => {
+                const number = index + 1;
+                return (
+                  <Pagination.Item
+                    key={number}
+                    active={number === active}
+                    onClick={() => setActive(number)}
+                  >
+                    {number}
+                  </Pagination.Item>
+                );
+              })}
+
+              <Pagination.Next onClick={() => setActive(Math.min(totalPage, active + 1))} />
+              <Pagination.Last onClick={() => setActive(totalPage)} />
+            </Pagination>
+          </Card>
+        </Col>
+      </Row>
+    </React.Fragment>
+  );
 };
 
 export default Page;
