@@ -43,7 +43,7 @@ class DashDefault extends React.Component {
   render () {
     return (
     <React.Fragment>
-      <Row>
+      <Row  >
         <DashSales
           source="sales"
           data={this.state.sales.data}

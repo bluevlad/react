@@ -1,9 +1,9 @@
 import superagent from "superagent";
-import { BASE_URL } from "../../../services/api";
+import { BASE_API } from "../../../config/constant";
 
 export const fetchBoardData = async (page = 1) => {
   try {
-    const response = await superagent.get(`${BASE_URL}/getBoardList?curPage=${page}`);
+    const response = await superagent.get(`${BASE_API}/getBoardList?curPage=${page}`);
 
     return {
       boardList: response.body.boardList.map(bd => ({
@@ -42,7 +42,7 @@ export const boardOne = (callback) => {
   const param = new URLSearchParams(url.search);
   const id = param.get("id");
 
-  superagent.get(BASE_URL+"/getBoard?boardId="+id).end((error, response) => {
+  superagent.get(BASE_API+"/getBoard?boardId="+id).end((error, response) => {
     let data = [];
       data.push({
         board_id: response.body.boardItem.board_id,

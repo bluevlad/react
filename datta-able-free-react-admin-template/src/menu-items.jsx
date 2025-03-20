@@ -20,6 +20,13 @@ const menuItems = {
           icon: 'feather icon-lock',
           children: [
             {
+              id: 'signin',
+              title: 'Sign in',
+              type: 'item',
+              url: '/auth/signin',
+              breadcrumbs: false
+            },
+            {
               id: 'signup',
               title: 'Sign up',
               type: 'item',
@@ -27,13 +34,6 @@ const menuItems = {
               target: false,
               breadcrumbs: false
             },
-            {
-              id: 'signin',
-              title: 'Sign in',
-              type: 'item',
-              url: '/auth/signin',
-              breadcrumbs: false
-            }
           ]
         },
       ]

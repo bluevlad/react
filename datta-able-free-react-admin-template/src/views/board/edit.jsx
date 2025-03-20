@@ -1,6 +1,6 @@
 import React from 'react';
 import superagent from "superagent";
-import { BASE_URL } from "../../services/api";
+import { BASE_API } from "../../config/constant";
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import { boardOne } from "./data";
 import { useNavigate } from "react-router-dom";
@@ -64,7 +64,7 @@ class Edit extends React.Component {
       e.preventDefault();
   
       superagent
-      .post(BASE_URL + "/updateBoard")
+      .post(BASE_API + "/updateBoard")
       .type("form") // application/x-www-form-urlencoded 타입 설정
       .send({
         boardId: this.state.boardId,

@@ -1,9 +1,9 @@
 import request from "superagent";
-import { BASE_URL } from "../../../services/api";
+import { BASE_API } from "../../../config/constant";
 
 export const sales = (callback) => {
 
-  request.get(BASE_URL+"/getSales").end((error, response) => {
+  request.get(BASE_API+"/getSales").end((error, response) => {
     let data = [];
     for (let ds of response.body.dashSalesData) {
       data.push({
@@ -24,7 +24,7 @@ export const sales = (callback) => {
 export const board = (callback) => {
 
     const page = 1;
-    request.get(BASE_URL+"/getBoardList?curPage="+page).end((error, response) => {
+    request.get(BASE_API+"/getBoardList?curPage="+page).end((error, response) => {
       let data = [];
       for (let bd of response.body.boardList) {
         data.push({
@@ -49,7 +49,7 @@ export const exam = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
   
-      request.get(BASE_URL+"/getExamBankItemList?curPage="+page).end((error, response) => {
+      request.get(BASE_API+"/getExamBankItemList?curPage="+page).end((error, response) => {
       let data = [];
       for (let exam of response.body.exambankItemList) {
         data.push({
@@ -83,7 +83,7 @@ export const locker = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
 
-  request.get(BASE_URL+"/getLockerList?curPage="+page).end((error, response) => {
+  request.get(BASE_API+"/getLockerList?curPage="+page).end((error, response) => {
     let data = [];
     
     for (let loc of response.body.lockers) {

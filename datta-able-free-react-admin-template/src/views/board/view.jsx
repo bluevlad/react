@@ -1,6 +1,6 @@
 import React from "react";
 import superagent from "superagent";
-import { BASE_URL } from "../../services/api";
+import { BASE_API } from "../../config/constant";
 import { Form, Button, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { boardOne } from "./data";
@@ -55,7 +55,7 @@ class View extends React.Component {
     e.preventDefault();
 
     superagent
-      .post(BASE_URL + "/deleteBoard")
+      .post(BASE_API + "/deleteBoard")
       .type("form")
       .send({
         boardId: this.state.boardId,

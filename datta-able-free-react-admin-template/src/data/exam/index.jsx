@@ -1,5 +1,5 @@
 import request from "superagent";
-import { BASE_URL } from "../../services/api";
+import { BASE_API } from "../../config/constant";
 
 export const exam = (callback) => {
 
@@ -7,7 +7,7 @@ export const exam = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
   
-      request.get(BASE_URL+"/getExamBankItemList?curPage="+page).end((error, response) => {
+      request.get(BASE_API+"/getExamBankItemList?curPage="+page).end((error, response) => {
       let data = [];
       for (let exam of response.body.exambankItemList) {
         data.push({
@@ -41,7 +41,7 @@ export const examOne = (callback) => {
   const param = new URLSearchParams(url.search);
   const id = param.get("id");
 
-  request.get(BASE_URL+"/getExamBankItem?queId="+id).end((error, response) => {
+  request.get(BASE_API+"/getExamBankItem?queId="+id).end((error, response) => {
     let data = [];
       data.push({
         que_id: response.body.examBankItem.que_id,
@@ -73,7 +73,7 @@ export const ePage = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
 
-  request.get(BASE_URL+"/getExamBankItemList?curPage="+page).end((error, response) => {
+  request.get(BASE_API+"/getExamBankItemList?curPage="+page).end((error, response) => {
     let data = [];
       data.push({
         currentPageNo: response.body.paginationInfo.currentPageNo,

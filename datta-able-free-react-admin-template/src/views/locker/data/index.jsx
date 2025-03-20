@@ -1,9 +1,9 @@
 import superagent from "superagent";
-import { BASE_URL } from "../../../services/api";
+import { BASE_API } from "../../../config/constant";
 
 export const fetchLockerData = async (page = 1) => {
   try {
-    const response = await superagent.get(`${BASE_URL}/getLockerList?curPage=${page}`);
+    const response = await superagent.get(`${BASE_API}/getLockerList?curPage=${page}`);
 
     return {
       lockerList: response.body.lockers.map(loc => ({
@@ -47,7 +47,7 @@ export const lockerOne = (callback) => {
   const param = new URLSearchParams(url.search);
   const id = param.get("id");
 
-  request.get(BASE_URL+"/getLocker?boxCd="+id).end((error, response) => {
+  request.get(BASE_API+"/getLocker?boxCd="+id).end((error, response) => {
     let data = [];
       data.push({
         box_cd: response.body.item.box_cd,
