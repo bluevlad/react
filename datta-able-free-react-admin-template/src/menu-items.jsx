@@ -65,13 +65,6 @@ const menuItems = {
           icon: 'feather icon-box',
           url: '/locker/list'
         },
-        {
-          id: 'page',
-          title: '페이지',
-          type: 'item',
-          icon: 'feather icon-menu',
-          url: '/page'
-        }
       ]
     },
     {
