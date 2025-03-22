@@ -49,7 +49,7 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       token: props.token || "",
-      regId: props.userId || "",
+      userId: props.userId || "",
       userNm: props.userNm || "",
       userPwd: props.userPwd || "",
       confirmPassword: props.userPwd || "",
@@ -65,7 +65,7 @@ class Profile extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.userId !== this.props.userId) {
-      this.setState({ regId: this.props.userId });
+      this.setState({ userId: this.props.userId });
     }
     if (prevProps.userNm !== this.props.userNm) {
       this.setState({ userNm: this.props.userNm });
@@ -90,7 +90,7 @@ class Profile extends React.Component {
     e.preventDefault();
 
     superagent
-      .post(BASE_API + "/updateUser")
+      .post(BASE_API + "/auth/updateUser")
       .type("form")
       .send(this.state)
       .then((res) => {
@@ -117,7 +117,7 @@ class Profile extends React.Component {
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>아이디</Form.Label>
-                        <Form.Control type="text" value={this.state.regId} readOnly />
+                        <Form.Control type="text" value={this.state.userId} readOnly />
                       </Form.Group>
                       <Form.Group className="mb-3">
                         <Form.Label>비밀번호</Form.Label>

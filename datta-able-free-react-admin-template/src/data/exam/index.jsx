@@ -7,7 +7,7 @@ export const exam = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
   
-      request.get(BASE_API+"/getExamBankItemList?curPage="+page).end((error, response) => {
+      request.get(BASE_API+"/getExamBankItemList?pageIndex="+page).end((error, response) => {
       let data = [];
       for (let exam of response.body.exambankItemList) {
         data.push({
@@ -73,7 +73,7 @@ export const ePage = (callback) => {
   const param = new URLSearchParams(url.search);
   const page = param.get("page") === null ? 1 : param.get("page");
 
-  request.get(BASE_API+"/getExamBankItemList?curPage="+page).end((error, response) => {
+  request.get(BASE_API+"/getExamBankItemList?pageIndex="+page).end((error, response) => {
     let data = [];
       data.push({
         currentPageNo: response.body.paginationInfo.currentPageNo,

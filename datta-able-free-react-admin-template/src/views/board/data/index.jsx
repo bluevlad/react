@@ -3,7 +3,7 @@ import { BASE_API } from "../../../config/constant";
 
 export const fetchBoardData = async (page = 1) => {
   try {
-    const response = await superagent.get(`${BASE_API}/getBoardList?curPage=${page}`);
+    const response = await superagent.get(`${BASE_API}/getBoardList?pageIndex=${page}`);
 
     return {
       boardList: response.body.boardList.map(bd => ({
