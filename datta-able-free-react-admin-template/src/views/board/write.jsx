@@ -19,8 +19,7 @@ function withUserId(Component) {
     const userId = localStorage.getItem("userId");
 
     useEffect(() => {
-      if (!token) return;
-
+      if (!token) this.props.navigate("/auth/signin");
     }, [token]);
 
     return <Component {...props} userId={userId} />;

@@ -3,7 +3,7 @@ import { BASE_API } from "../../../config/constant";
 
 export const fetchExamData = async (page = 1) => {
   try {
-    const response = await superagent.get(`${BASE_API}/getExamList?pageIndex=${page}`);
+    const response = await superagent.get(`${BASE_API}/exam/getExamList?pageIndex=${page}`);
 
     return {
       examList: response.body.examList.map(exam => ({
@@ -49,7 +49,7 @@ export const examOne = (callback) => {
   const param = new URLSearchParams(url.search);
   const id = param.get("id");
 
-  superagent.get(BASE_API+"/getExamView?examId="+id).end((error, response) => {
+  superagent.get(BASE_API+"/exam/getExamView?examId="+id).end((error, response) => {
     let data = [];
       data.push({
         exam_id: response.body.examDetail.exam_id,
@@ -80,7 +80,7 @@ export const fetchExamDetailData = async () => {
     const url = new URL(window.location.href);
     const param = new URLSearchParams(url.search);
     const id = param.get("id");
-    const response = await superagent.get(`${BASE_API}/getExamView?examId=`+id);
+    const response = await superagent.get(`${BASE_API}/exam/getExamView?examId=`+id);
 
     return {
       queList: response.body.QueList.map(que => ({

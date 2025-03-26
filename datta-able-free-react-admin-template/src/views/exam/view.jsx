@@ -1,27 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import superagent from "superagent";
 import { BASE_API } from "../../config/constant";
 import { Form, Button, Row, Col, Card, Collapse, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { fetchExamDetailData } from "./data";
 
+
+// useNavigate를 클래스 컴포넌트에서 사용하기 위한 HOC
 function withRouter(Component) {
   return function WrappedComponent(props) {
     const navigate = useNavigate();
-    const { examId } = useParams(); // URL에서 examId 가져오기
-    return <Component {...props} navigate={navigate} />;
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    if (!token) {
+      navigate("/auth/signin");
+      return null; // 로그인 페이지로 이동할 때 렌더링을 중단
+    }
+
+    return <Component {...props} token={token} userId={userId} navigate={navigate} />;
   };
 }
-
 
 class View extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: props.userId || "",
+      token: props.token || "",
       queList: [],
       examDetail: {},
       loaded: false,
-      accordionKey: 0, // 닫힌 상태로 초기화
+      activeAccordion: null,
+      answers: {}, // 응답 저장
     };
   }
 
@@ -42,17 +53,43 @@ class View extends React.Component {
     this.props.navigate("/exam/list");
   };
 
+  handleAnswerChange = (queId, value) => {
+    this.setState((prevState) => ({
+      answers: {
+        ...prevState.answers,
+        [queId]: value,
+      },
+    }));
+  };
+   
   handleFormSubmit = (e) => {
     e.preventDefault();
+
+    const { userId, examDetail, answers } = this.state;
+
+    if (!examDetail.exam_id) {
+      alert("시험 ID가 없습니다. 다시 시도해 주세요.");
+      return;
+    }
+//      alert("userId : " + userId);
+//      alert("examDetail : " + examDetail);
+//      alert("answers: " + answers);
+  
+    const payload = {
+      userId,
+      examId: examDetail.exam_id,
+      answers, // 문제 ID와 선택한 답을 객체 형태로 전송
+    };
+  
     superagent
-      .post(`${BASE_API}/deleteBoard`)
+      .post(`${BASE_API}/exam/insertExamResult`)
       .type("form")
-      .send({ boardId: this.state.examDetail.exam_id })
-      .then(() => {
-        alert("삭제 완료");
+      .send(payload)
+      .then((res) => {
+        alert("Response: " + res.text);
         this.goList();
       })
-      .catch((err) => console.error("삭제 오류:", err));
+      .catch((err) => console.error("시험 제출 오류:", err));
   };
 
   // 개별 문제 아코디언 토글
@@ -94,51 +131,56 @@ class View extends React.Component {
             </Card>
 
             <Form onSubmit={this.handleFormSubmit}>
-            {/* 시험 문제 목록 */}
-            {queList.length > 0 ? (
-              queList.map((que, index) => (
-                <Card key={index} className="mt-3">
-                  <Card.Header>
-                    <Card.Title as="h5">
-                      <Link
-                        to="#"
-                        onClick={() => this.toggleQuestionAccordion(index)}
-                        aria-controls={`accordion${index}`}
-                        aria-expanded={activeAccordion === index}
-                      >
-                        {que.que_title}
-                      </Link>
-                    </Card.Title>
-                  </Card.Header>
-                  <Collapse in={activeAccordion === index}>
-                    <div id={`accordion${index}`}>
-                      <Card.Body>
-                      <Form.Group className="mb-3">
-                        <Form.Check type="radio" label={que.ans_view1} name={que.que_id+"_1"} />
-                        <Form.Check type="radio" label={que.ans_view2} name={que.que_id+"_2"} />
-                        <Form.Check type="radio" label={que.ans_view3} name={que.que_id+"_3"} />
-                        <Form.Check type="radio" label={que.ans_view4} name={que.que_id+"_4"} />
-                        <Form.Check type="radio" label={que.ans_view5} name={que.que_id+"_5"} />
-                      </Form.Group>
-                      </Card.Body>
-                    </div>
-                  </Collapse>
-                </Card>
-              ))
-            ) : (
-              <p>등록된 문제가 없습니다.</p>
-            )}
-            </Form>
-
-            {/* 삭제 버튼 */}
-            <Form onSubmit={this.handleFormSubmit}>
               <Form.Control name="examId" type="hidden" value={examDetail.exam_id || ""} />
+              <Form.Control name="userId" type="hidden" value={this.state.userId} />
+              {/* 시험 문제 목록 */}
+              {queList.length > 0 ? (
+                queList.map((que, index) => (
+                  <Card key={index} className="mt-3">
+                    <Card.Header>
+                      <Card.Title as="h5">
+                        <Link
+                          to="#"
+                          onClick={() => this.toggleQuestionAccordion(index)}
+                          aria-controls={`accordion${index}`}
+                          aria-expanded={activeAccordion === index}
+                        >
+                          {que.que_title}
+                        </Link>
+                      </Card.Title>
+                    </Card.Header>
+                    <Collapse in={activeAccordion === index}>
+                      <div id={`accordion${index}`}>
+                        <Card.Body>
+                          <Form.Control name="que_id" type="hidden" value={que.que_id} />
+                          <Form.Group className="mb-3">
+                            {[1, 2, 3, 4, 5].map((num) => (
+                              <Form.Check
+                                key={num}
+                                type="radio"
+                                label={que[`ans_view${num}`]}
+                                name={`ans_${que.que_id}`}
+                                value={num}
+                                onChange={(e) => this.handleAnswerChange(que.que_id, e.target.value)}
+                              />
+                            ))}
+                          </Form.Group>
+                        </Card.Body>
+                      </div>
+                    </Collapse>
+                  </Card>
+                ))
+              ) : (
+                <p>등록된 문제가 없습니다.</p>
+              )}
+
+              {/* 버튼 영역 */}
               <div className="d-flex justify-content-end">
-                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">목록</Tooltip>}>
-                  <Button variant="info" onClick={this.goList}>목록</Button>
-                </OverlayTrigger>
                 <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">제출</Tooltip>}>
                   <Button variant="primary" type="submit" className="ms-2">제출</Button>
+                </OverlayTrigger>
+                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">목록</Tooltip>}>
+                  <Button variant="info" onClick={this.goList}>목록</Button>
                 </OverlayTrigger>
               </div>
             </Form>
@@ -148,6 +190,5 @@ class View extends React.Component {
     );
   }
 }
-
 
 export default withRouter(View);
