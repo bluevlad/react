@@ -12,13 +12,19 @@ function withRouter(Component) {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
+    const userNm = localStorage.getItem("userNm");
+
+    useEffect(() => {
+      if (!token) {
+        navigate("/auth/signin");
+      }
+    }, [token, navigate]);
 
     if (!token) {
-      navigate("/auth/signin");
       return null; // 로그인 페이지로 이동할 때 렌더링을 중단
     }
 
-    return <Component {...props} token={token} userId={userId} navigate={navigate} />;
+    return <Component {...props} token={token} userId={userId} userNm={userNm} navigate={navigate} />;
   };
 }
 
@@ -27,6 +33,7 @@ class View extends React.Component {
     super(props);
     this.state = {
       userId: props.userId || "",
+      userNm: props.userNm || "",
       token: props.token || "",
       queList: [],
       examDetail: {},
@@ -65,7 +72,7 @@ class View extends React.Component {
   handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const { userId, examDetail, answers } = this.state;
+    const { userId, userNm, examDetail, answers } = this.state;
 
     if (!examDetail.exam_id) {
       alert("시험 ID가 없습니다. 다시 시도해 주세요.");
@@ -77,6 +84,7 @@ class View extends React.Component {
   
     const payload = {
       userId,
+      userNm,
       examId: examDetail.exam_id,
       answers, // 문제 ID와 선택한 답을 객체 형태로 전송
     };
@@ -131,8 +139,9 @@ class View extends React.Component {
             </Card>
 
             <Form onSubmit={this.handleFormSubmit}>
-              <Form.Control name="examId" type="hidden" value={examDetail.exam_id || ""} />
-              <Form.Control name="userId" type="hidden" value={this.state.userId} />
+              <Form.Control name="examId" type="text" value={examDetail.exam_id || ""} />
+              <Form.Control name="userId" type="text" value={this.state.userId} />
+              <Form.Control name="userNm" type="text" value={this.state.userNm} />
               {/* 시험 문제 목록 */}
               {queList.length > 0 ? (
                 queList.map((que, index) => (
