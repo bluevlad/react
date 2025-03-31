@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import superagent from "superagent";
 import { BASE_API } from "../../config/constant";
 import { Form, Button, Row, Col, Card, Collapse, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { fetchExamDetailData } from "./data";
 
 
@@ -78,9 +78,6 @@ class Write extends React.Component {
       alert("시험 ID가 없습니다. 다시 시도해 주세요.");
       return;
     }
-//      alert("userId : " + userId);
-//      alert("examDetail : " + examDetail);
-//      alert("answers: " + answers);
   
     const payload = {
       userId,

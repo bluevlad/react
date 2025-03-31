@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import superagent from "superagent";
 import { BASE_API } from "../../config/constant";
 import { Form, Button, Row, Col, Card, Collapse, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useNavigate, Link, useParams } from "react-router-dom";
-import { fetchExamDetailData } from "./data";
-
+import { useNavigate, Link } from "react-router-dom";
+import { fetchExamResultlData } from "./data";
 
 // useNavigate를 클래스 컴포넌트에서 사용하기 위한 HOC
 function withRouter(Component) {
@@ -45,10 +44,15 @@ class View extends React.Component {
 
   async componentDidMount() {
     try {
-      const data = await fetchExamDetailData();
+      const data = await fetchExamResultlData();
+      const initialAnswers = {};
+      data.queList.forEach((que) => {
+        initialAnswers[que.que_id] = que.answer || "";
+      });
       this.setState({
         queList: data.queList,
         examDetail: data.examDetail,
+        answers: initialAnswers,
         loaded: true,
       });
     } catch (error) {
@@ -78,9 +82,6 @@ class View extends React.Component {
       alert("시험 ID가 없습니다. 다시 시도해 주세요.");
       return;
     }
-//      alert("userId : " + userId);
-//      alert("examDetail : " + examDetail);
-//      alert("answers: " + answers);
   
     const payload = {
       userId,
@@ -108,7 +109,7 @@ class View extends React.Component {
   };
 
   render() {
-    const { examDetail, activeAccordion, queList } = this.state;
+    const { examDetail, activeAccordion, queList, answers } = this.state;
 
     return (
       <React.Fragment>
@@ -139,9 +140,9 @@ class View extends React.Component {
             </Card>
 
             <Form onSubmit={this.handleFormSubmit}>
-              <Form.Control name="examId" type="text" value={examDetail.exam_id || ""} />
-              <Form.Control name="userId" type="text" value={this.state.userId} />
-              <Form.Control name="userNm" type="text" value={this.state.userNm} />
+              <Form.Control name="examId" type="text" value={examDetail.exam_id || ""} readOnly />
+              <Form.Control name="userId" type="text" value={this.state.userId} readOnly />
+              <Form.Control name="userNm" type="text" value={this.state.userNm} readOnly />
               {/* 시험 문제 목록 */}
               {queList.length > 0 ? (
                 queList.map((que, index) => (
@@ -170,6 +171,7 @@ class View extends React.Component {
                                 label={que[`ans_view${num}`]}
                                 name={`ans_${que.que_id}`}
                                 value={num}
+                                checked={answers[que.que_id] == num}
                                 onChange={(e) => this.handleAnswerChange(que.que_id, e.target.value)}
                               />
                             ))}

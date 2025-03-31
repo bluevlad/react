@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Table, Pagination, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Row, Col, Card, Table, Pagination } from 'react-bootstrap';
+import { BASE_API } from "../../config/constant";
 import { fetchExamData } from './data';
 import { useNavigate } from "react-router-dom";
+import superagent from 'superagent';
 
 
 export function withRouter(Component) {
@@ -53,10 +54,35 @@ class List extends Component {
   };
     
   // 🔹 글쓰기 페이지 이동 함수
-  goWrite = () => {
-    this.props.navigate('/exam/view');
-  };
+  chkExam = async (id) => {
   
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("로그인이 필요합니다.");
+      this.props.navigate('/login');
+      return;
+    }
+
+    try {
+      const res = await superagent
+        .post(`${BASE_API}/exam/getExamReq`)
+        .type("form")
+        .send({ userId, examId: id });
+
+      if (res.body.retMsg === 'Y') {
+        this.props.navigate(`/exam/edit?id=${id}`);
+      } else if (res.body.retMsg === 'N') {
+        this.props.navigate(`/exam/write?id=${id}`);
+      } else {
+        alert("시험 응시 여부 확인 실패: " + res.body.retMsg);
+        this.props.navigate('/exam/list');
+      }
+    } catch (err) {
+      console.error("시험 조회 오류:", err);
+      alert("시험 조회 중 오류가 발생했습니다.");
+    }
+  };
+
   render() {
     const { examList, paginationInfo, loaded, activePage } = this.state;
 
@@ -67,16 +93,6 @@ class List extends Component {
             <Card>
               <Card.Header>
                 <Card.Title as="h5">시험정보</Card.Title>
-                <div className="d-flex justify-content-end">
-                <OverlayTrigger
-                  placement="top"
-                  overlay={<Tooltip className="mb-2" id="tooltip">등록</Tooltip>}
-                >
-                  <Button variant="primary" className="text-capitalize" onClick={this.goWrite}>
-                    등록
-                  </Button>
-                </OverlayTrigger>
-              </div>
               </Card.Header>
               <Card.Body>
                 {loaded ? (
@@ -92,13 +108,9 @@ class List extends Component {
                     </thead>
                     <tbody>
                       {examList.map((item, index) => (
-                        <tr key={item.exam_id}>
+                        <tr key={item.exam_id} onClick={() => this.chkExam(item.exam_id)} style={{ cursor: "pointer" }}>
                           <th scope="row">{paginationInfo.totalRecordCount - paginationInfo.firstRecordIndex - index}</th>
-                          <td>
-                            <Link to={`/exam/view?id=${item.exam_id}`}>
-                              {item.exam_nm}
-                            </Link>
-                          </td>
+                          <td>{item.exam_nm}</td>
                           <td>{item.reg_id}</td>
                           <td>{item.reg_dt}</td>
                           <td>{item.is_use}</td>

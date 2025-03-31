@@ -3,7 +3,7 @@ import { BASE_API } from "../../../config/constant";
 
 export const sales = (callback) => {
 
-  request.get(BASE_API+"/getSales").end((error, response) => {
+  request.get(BASE_API+"/main/getSales").end((error, response) => {
     let data = [];
     for (let ds of response.body.dashSalesData) {
       data.push({

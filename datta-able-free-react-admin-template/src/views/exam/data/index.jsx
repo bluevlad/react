@@ -43,37 +43,6 @@ export const fetchExamData = async (page = 1) => {
   }
 };
 
-export const examOne = (callback) => {
-
-  const url = new URL(window.location.href);
-  const param = new URLSearchParams(url.search);
-  const id = param.get("id");
-
-  superagent.get(BASE_API+"/exam/getExamView?examId="+id).end((error, response) => {
-    let data = [];
-      data.push({
-        exam_id: response.body.examDetail.exam_id,
-        exam_nm: response.body.examDetail.exam_nm,
-        exam_year: response.body.examDetail.exam_year,
-        exam_round: response.body.examDetail.exam_round,
-        exam_open: response.body.examDetail.exam_open,
-        exam_end: response.body.examDetail.exam_end,
-        exam_period: response.body.examDetail.exam_period,
-        exam_time: response.body.examDetail.exam_period,
-				is_use: response.body.examDetail.is_use,
-        use_flag: response.body.examDetail.use_flag,
-        set_id: response.body.examDetail.set_id,
-        reg_dt: response.body.examDetail.reg_dt,
-        reg_id: response.body.examDetail.reg_id,
-        upd_dt: response.body.examDetail.upd_dt,
-        upd_id: response.body.examDetail.upd_id,
-     });
-
-    callback(data);
-  });
-
-};
-
 export const fetchExamDetailData = async () => {
   try {
 
@@ -99,6 +68,59 @@ export const fetchExamDetailData = async () => {
         ans_view3: que.ans_view3,
         ans_view4: que.ans_view4,
         ans_view5: que.ans_view5,
+      })),
+      examDetail: {
+        exam_id: response.body.examDetail.exam_id,
+        exam_nm: response.body.examDetail.exam_nm,
+        exam_year: response.body.examDetail.exam_year,
+        exam_round: response.body.examDetail.exam_round,
+        exam_open: response.body.examDetail.exam_open,
+        exam_end: response.body.examDetail.exam_end,
+        exam_period: response.body.examDetail.exam_period,
+        exam_time: response.body.examDetail.exam_time,
+				is_use: response.body.examDetail.is_use,
+        use_flag: response.body.examDetail.use_flag,
+        set_id: response.body.examDetail.set_id,
+        reg_dt: response.body.examDetail.reg_dt,
+        reg_id: response.body.examDetail.reg_id,
+        upd_dt: response.body.examDetail.upd_dt,
+        upd_id: response.body.examDetail.upd_id,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching exam data:", error);
+    return { queList: [], examDetail: { } }; // 기본값 반환
+  }
+};
+
+export const fetchExamResultlData = async () => {
+  try {
+
+    const url = new URL(window.location.href);
+    const param = new URLSearchParams(url.search);
+    const id = param.get("id");
+    const userId = localStorage.getItem("userId");
+    const response = await superagent.get(`${BASE_API}/exam/getExamEdit?examId=`+id+`&userId=`+userId);
+
+    return {
+      queList: response.body.QueList.map(que => ({
+        que_id: que.que_id,
+        que_title: que.que_title,
+        que_desc: que.que_desc,
+        pass_ans: que.pass_ans,
+        que_range: que.que_range,
+        que_level: que.que_level,
+        que_count: que.que_count,
+        que_type: que.que_type,
+				pass_ans: que.pass_ans,
+        ans_desc: que.ans_desc,
+        ans_view1: que.ans_view1,
+        ans_view2: que.ans_view2,
+        ans_view3: que.ans_view3,
+        ans_view4: que.ans_view4,
+        ans_view5: que.ans_view5,
+        answer: que.answer,
+        currect_yn: que.currect_yn,
       })),
       examDetail: {
         exam_id: response.body.examDetail.exam_id,
