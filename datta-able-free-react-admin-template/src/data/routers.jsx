@@ -3,7 +3,7 @@ import { BASE_API } from "../config/constant";
 
 export const fetchRouterData = async () => {
   try {
-    const response = await superagent.get(`${BASE_API}/getRouter`);
+    const response = await superagent.get(`${BASE_API}/main/getRouter`);
 
     // JSON 데이터를 routes 구조로 변환
     const routers = response.body.router

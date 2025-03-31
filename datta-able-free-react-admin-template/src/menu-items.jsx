@@ -31,7 +31,6 @@ const menuItems = {
               title: 'Sign up',
               type: 'item',
               url: '/auth/signup',
-              target: false,
               breadcrumbs: false
             },
           ]
