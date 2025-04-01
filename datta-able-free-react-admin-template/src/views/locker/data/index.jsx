@@ -3,7 +3,7 @@ import { BASE_API } from "../../../config/constant";
 
 export const fetchLockerData = async (page = 1) => {
   try {
-    const response = await superagent.get(`${BASE_API}/getLockerList?curPage=${page}`);
+    const response = await superagent.get(`${BASE_API}/locker/getLockerList?curPage=${page}`);
 
     return {
       lockerList: response.body.lockers.map(loc => ({
@@ -41,31 +41,44 @@ export const fetchLockerData = async (page = 1) => {
   }
 };
 
-export const lockerOne = (callback) => {
+export const fetchLockerDetailData = async () => {
+  try {
 
-  const url = new URL(window.location.href);
-  const param = new URLSearchParams(url.search);
-  const id = param.get("id");
+    const url = new URL(window.location.href);
+    const param = new URLSearchParams(url.search);
+    const id = param.get("id");
+    const response = await superagent.get(`${BASE_API}/locker/getLocker?boxCd=`+id);
 
-  request.get(BASE_API+"/getLocker?boxCd="+id).end((error, response) => {
-    let data = [];
-      data.push({
-        box_cd: response.body.item.box_cd,
-        box_nm: response.body.item.box_nm,
-        box_count: parseInt(response.body.item.box_count),
-        not_cnt: parseInt(response.body.item.not_cnt),
-        row_num: parseInt(response.body.item.row_num),
-        row_count: parseInt(response.body.item.row_count),
-        use_cnt: parseInt(response.body.item.use_cnt),
-        start_num: response.body.item.start_num,
-        end_num: parseInt(response.body.item.end_num),
-        box_price: response.body.item.box_price,
-        deposit: response.body.item.deposit,
-        upd_id: response.body.item.upd_id,
-        upd_dt: response.body.item.upd_dt,
-      });
-
-    callback(data);
-  });
-
+    return {
+      lockerNumList: response.body.lockerNumList.map(loc => ({
+        box_cd: loc.box_cd,
+        box_num: parseInt(loc.box_num),
+        user_id: loc.user_id,
+        user_nm: loc.user_nm,
+        box_flag: loc.box_flag,
+        upd_dt: loc.upd_dt,
+        upd_id: loc.upd_id,
+        rent_seq: loc.rent_seq,
+        rent_memo: loc.rent_memo,
+      })),
+      lockerDetail: {
+        box_cd: response.body.lockerDetail.box_cd,
+        box_nm: response.body.lockerDetail.box_nm,
+        box_count: parseInt(response.body.lockerDetail.box_count),
+        not_cnt: parseInt(response.body.lockerDetail.not_cnt),
+        row_num: parseInt(response.body.lockerDetail.row_num),
+        row_count: parseInt(response.body.lockerDetail.row_count),
+        use_cnt: parseInt(response.body.lockerDetail.use_cnt),
+        start_num: response.body.lockerDetail.start_num,
+        end_num: parseInt(response.body.lockerDetail.end_num),
+        box_price: response.body.lockerDetail.box_price,
+        deposit: response.body.lockerDetail.deposit,
+        upd_id: response.body.lockerDetail.upd_id,
+        upd_dt: response.body.lockerDetail.upd_dt,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching locker data:", error);
+    return { lockerNumList: [], lockerDetail: { } }; // 기본값 반환
+  }
 };

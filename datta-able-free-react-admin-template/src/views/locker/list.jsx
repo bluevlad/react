@@ -51,11 +51,6 @@ class List extends Component {
       this.loadLockerData(page);
     }
   };
-    
-  // 🔹 글쓰기 페이지 이동 함수
-  goWrite = () => {
-    this.props.navigate('/locker/write');
-  };
   
   render() {
     const { lockerList, paginationInfo, loaded, activePage } = this.state;
@@ -66,17 +61,7 @@ class List extends Component {
           <Col>
             <Card>
               <Card.Header>
-                <Card.Title as="h5">문의게시판</Card.Title>
-                <div className="d-flex justify-content-end">
-                <OverlayTrigger
-                  placement="top"
-                  overlay={<Tooltip className="mb-2" id="tooltip">등록</Tooltip>}
-                >
-                  <Button variant="primary" className="text-capitalize" onClick={this.goWrite}>
-                    등록
-                  </Button>
-                </OverlayTrigger>
-              </div>
+                <Card.Title as="h5">사물함예약</Card.Title>
               </Card.Header>
               <Card.Body>
                 {loaded ? (
