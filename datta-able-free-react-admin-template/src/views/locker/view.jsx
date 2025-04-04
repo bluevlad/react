@@ -5,11 +5,6 @@ import { Form, Button, Row, Col, Card, Table, OverlayTrigger, Tooltip } from "re
 import { useNavigate, Link } from "react-router-dom";
 import { fetchLockerDetailData } from "./data";
 
-import avatar1 from '../../assets/images/user/avatar-1.jpg';
-import avatar2 from '../../assets/images/user/avatar-2.jpg';
-import avatar3 from '../../assets/images/user/avatar-3.jpg';
-
-
 // useNavigate를 클래스 컴포넌트에서 사용하기 위한 HOC
 function withRouter(Component) {
   return function WrappedComponent(props) {
@@ -63,9 +58,7 @@ class View extends React.Component {
     this.props.navigate("/locker/list");
   };
 
-  handleFormSubmit = (e) => {
-    e.preventDefault();
-
+  handleFormSubmit = (i) => {
     const { userId, userNm, lockerDetail } = this.state;
 
     if (!lockerDetail.box_cd) {
@@ -77,10 +70,12 @@ class View extends React.Component {
       userId,
       userNm,
       boxCd: lockerDetail.box_cd,
+      boxPrice: lockerDetail.box_price,
+      boxNum: i,
     };
   
     superagent
-      .post(`${BASE_API}/locker/insertLocker`)
+      .post(`${BASE_API}/locker/insertLockerRent`)
       .type("form")
       .send(payload)
       .then((res) => {
@@ -91,12 +86,6 @@ class View extends React.Component {
   };
 
   // 개별 문제 아코디언 토글
-  toggleQuestionAccordion = (index) => {
-    this.setState((prevState) => ({
-      activeAccordion: prevState.activeAccordion === index ? null : index,
-    }));
-  };
-
   render() {
     const { lockerDetail, activeAccordion, lockerNumList } = this.state;
 
@@ -112,27 +101,32 @@ class View extends React.Component {
               <Card.Body>
                 <Row>
                   <Col md={6}>
-                    <h6 className="mt-4 text-muted">사물함정보 정보</h6>
+                    <h6 className="mt-4 text-muted">대여비용</h6>
                     <hr />
-                    {lockerDetail.box_count} - {lockerDetail.box_price} - {lockerDetail.deposit}
-                    <h6 className="mt-3 text-muted">시험 기간</h6>
+                    {lockerDetail.box_count} - {lockerDetail.box_price}원 - 
+                    <h6 className="mt-3 text-muted">대여가능/사용중</h6>
                     <hr />
-                    {lockerDetail.not_cnt} - {lockerDetail.use_cnt}
+                    {lockerDetail.not_cnt} / {lockerDetail.use_cnt}
+                    <h6 className="mt-3 text-muted">열*개수</h6>
                     <hr />
-                    {lockerDetail.row_num} - {lockerDetail.row_count}
+                    {lockerDetail.row_num} * {lockerDetail.row_count}
                   </Col>
                   <Col md={6}>
-                    <h6 className="mt-4 text-muted">시험 시간</h6>
+                    <h6 className="mt-4 text-muted">예치금</h6>
+                    <hr />
+                    {lockerDetail.deposit}원
+                    <h6 className="mt-4 text-muted">시작번호 - 끝번호</h6>
                     <hr />
                     {lockerDetail.start_num} - {lockerDetail.end_num}
                   </Col>
                 </Row>
               </Card.Body>
             </Card>
-            <Form onSubmit={this.handleFormSubmit}>
-              <Form.Control name="boxCd" type="text" value={lockerDetail.box_cd || ""} />
-              <Form.Control name="userId" type="text" value={this.state.userId} />
-              <Form.Control name="userNm" type="text" value={this.state.userNm} />
+            <Form>
+              <Form.Control name="boxCd" type="hidden" value={lockerDetail.box_cd || ""} />
+              <Form.Control name="userId" type="hidden" value={this.state.userId} />
+              <Form.Control name="userNm" type="hidden" value={this.state.userNm} />
+              <Form.Control name="boxPrice" type="hidden" value={lockerDetail.box_price} />
               <Col md={6} xl={12}>
                 <Card className="Recent-Users widget-focus-lg">
                   <Card.Header>
@@ -168,9 +162,14 @@ class View extends React.Component {
                           }}
                           >
                             {loc.box_flag === 'N' ? (
-                            <Link to="#" className="label theme-bg text-white f-12">
+                            <Button
+                              variant="success"
+                              size="sm"
+                              className="label theme-bg text-white f-12"
+                              onClick={() => this.handleFormSubmit(loc.box_num)}
+                            >
                               [{loc.box_num}] 예약
-                            </Link>
+                            </Button>
                             ) : loc.box_flag === 'X' ? (
                             <div className="label theme-bg2 text-white f-12">
                               [{loc.box_num}] 고장
