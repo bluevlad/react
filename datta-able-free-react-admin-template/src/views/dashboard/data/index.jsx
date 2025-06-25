@@ -21,6 +21,24 @@ export const sales = (callback) => {
 
 };
 
+export const mylocker = (callback) => {
+
+  const user_id = localStorage.getItem("userId");
+
+  request.get(BASE_API+"/dashboard/myRentLocker?userId="+user_id).end((error, response) => {
+    let data = [];
+      data.push({
+        box_cd: response.body.myRentLocker.box_cd,
+        box_num: response.body.myRentLocker.box_nm,
+        rent_start: response.body.myRentLocker.rent_start,
+        rent_end: response.body.myRentLocker.rent_end,
+      });
+
+    callback(data);
+  });
+
+};
+
 export const board = (callback) => {
 
     const page = 1;

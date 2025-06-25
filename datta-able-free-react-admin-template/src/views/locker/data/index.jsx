@@ -3,7 +3,7 @@ import { BASE_API } from "../../../config/constant";
 
 export const fetchLockerData = async (page = 1) => {
   try {
-    const response = await superagent.get(`${BASE_API}/locker/getLockerList?curPage=${page}`);
+    const response = await superagent.get(`${BASE_API}/locker/getLockerList?pageIndex=${page}`);
 
     return {
       lockerList: response.body.lockers.map(loc => ({
@@ -36,7 +36,7 @@ export const fetchLockerData = async (page = 1) => {
       },
     };
   } catch (error) {
-    console.error("Error fetching board data:", error);
+    console.error("Error fetching locker data:", error);
     return { lockerList: [], paginationInfo: { totalPageCount: 1 } }; // 기본값 반환
   }
 };
