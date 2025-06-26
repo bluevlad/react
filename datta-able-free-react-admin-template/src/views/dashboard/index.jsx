@@ -1,22 +1,15 @@
 import React from 'react';
-import { Row, Col, Card, Table, Tabs, Tab } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
 
-import { sales, board, exam, locker } from './data';
-import DashSales from './dashSales';
+import { board, exam, locker } from './data';
 import TabContent from './tabContent';
 import MyLocker from './MyLocker';
-
-import avatar1 from '../../assets/images/user/avatar-1.jpg';
-import avatar2 from '../../assets/images/user/avatar-2.jpg';
-import avatar3 from '../../assets/images/user/avatar-3.jpg';
 
 class DashDefault extends React.Component {
 
   constructor () {
     super();
     this.state = {
-      sales: { data: [], loaded: false },
       board: { data: [], loaded: false },
       exam: { data: [], loaded: false },
       locker: { data: [], loaded: false },
@@ -24,11 +17,6 @@ class DashDefault extends React.Component {
   }
 
   componentDidMount () {
-    sales((data) => {
-      this.setState({
-        sales: { data: data, loaded: true },
-      });
-    });
     board((data) => {
       this.setState({
         board: { data: data, loaded: true },
@@ -50,11 +38,6 @@ class DashDefault extends React.Component {
     return (
     <React.Fragment>
       <Row  >
-        <DashSales
-          source="sales"
-          data={this.state.sales.data}
-          loaded={this.state.sales.loaded}
-        />
         <MyLocker/>
 
         <Col md={6} xl={8} className="user-activity">

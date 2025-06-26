@@ -1,11 +1,11 @@
-import React from 'react';
-import { Row, Col, Card, Table, Tabs, Tab } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import superagent from "superagent";
+import { BASE_API } from "../../config/constant";
+import { Form, Row, Col, Card, Table } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { mylocker } from './data';
 
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
-import avatar2 from '../../assets/images/user/avatar-2.jpg';
-import avatar3 from '../../assets/images/user/avatar-3.jpg';
 
 // 🔹 `withRouter` 유틸 함수 (React Router v6에서 사용) 
 // navigate를 props로 전달
@@ -30,6 +30,7 @@ function withRouter(Component) {
   };
 }
 
+
 class MyLocker extends React.Component {
   constructor(props) {
     super(props);
@@ -37,8 +38,11 @@ class MyLocker extends React.Component {
       userId: props.userId || "",
       userNm: props.userNm || "",
       token: props.token || "",
+      mylocker: {
+        data: [],
+        loaded: false,
+      }
     };
-  
   }
 
   componentDidMount() {
@@ -48,18 +52,38 @@ class MyLocker extends React.Component {
           data: data,
           loaded: true,
         },
-        boxCd: data[0]?.box_cd || "",
-        boxNum: data[0]?.box_num || "",
-        rentStart: data[0]?.rent_start || "",
-        rentEnd: data[0]?.rent_end || "",
       });
     });
   }
 
+  doCancel = (boxCd, boxNum, rentSeq) => {
+
+    const payload = {
+      box_cd: boxCd,
+      box_num: boxNum,
+      rent_seq: rentSeq,
+      user_id: this.state.userId,
+    };
+  
+    superagent
+      .post(`${BASE_API}/locker/lockerRefund`)
+      .type("form")
+      .send(payload)
+      .then((res) => {
+        alert("Response: " + res.text);
+        window.location.reload(); // 간단한 방법
+      })
+      .catch((err) => console.error("사물함 취소 오류:", err));
+  };
+  
   render () {
+    const { mylocker } = this.state;
+
     return (
     <React.Fragment>
-      <Row  >
+      <Row>
+
+        <Form>
         <Col md={6} xl={8}>
           <Card className="Recent-Users widget-focus-lg">
             <Card.Header>
@@ -67,126 +91,56 @@ class MyLocker extends React.Component {
             </Card.Header>
             <Card.Body className="px-0 py-2">
               <Table responsive hover className="recent-users">
-                <tbody>
-                  <tr className="unread">
-                    <td>
-                      <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" />
-                    </td>
-                    <td>
-                      <h6 className="mb-1">{this.state.boxCd} - {this.state.boxNum}</h6>
-                      <p className="m-0">Lorem Ipsum is simply dummy text of…</p>
-                    </td>
-                    <td>
-                      <h6 className="text-muted">
-                        <i className="fa fa-circle text-c-green f-10 m-r-15" />
-                        {this.state.rentStart} ~ {this.state.rentEnd}
-                      </h6>
-                    </td>
-                    <td>
-                      <Link to="#" className="label theme-bg2 text-white f-12">
-                        Reject
-                      </Link>
-                      <Link to="#" className="label theme-bg text-white f-12">
+              <tbody>
+                {this.state.mylocker.loaded && this.state.mylocker.data.length > 0 ? (
+                  this.state.mylocker.data.map((item, index) => (
+                    <tr className="unread" key={index}>
+                      <td>
+                        <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" />
+                      </td>
+                      <td>
+                        <h6 className="mb-1">{item.box_cd} - {item.box_num}</h6>
+                        <p className="m-0">{item.box_nm}</p>
+                      </td>
+                      <td>
+                        {item.rest_yn == 1 ? (
+                          <h6 className="text-muted">
+                            <i className="fa fa-circle text-c-green f-10 m-r-15" />
+                            {item.rent_start} ~ {item.rent_end}
+                          </h6>
+                        ) : (
+                          <h6 className="text-muted">
+                            <i className="fa fa-circle text-c-red f-10 m-r-15" />
+                            {item.rent_start} ~ {item.rent_end}
+                          </h6>
+                        )}
+                      </td>
+                      <td>
+                      {item.rest_yn == 1 ? (
+                        <>
+                        <Link to="#" className="label theme-bg2 text-white f-12">
                         Approve
-                      </Link>
-                    </td>
-                  </tr>
-                  <tr className="unread">
-                    <td>
-                      <img className="rounded-circle" style={{ width: '40px' }} src={avatar2} alt="activity-user" />
-                    </td>
-                    <td>
-                      <h6 className="mb-1">Mathilde Andersen</h6>
-                      <p className="m-0">Lorem Ipsum is simply dummy text of…</p>
-                    </td>
-                    <td>
-                      <h6 className="text-muted">
-                        <i className="fa fa-circle text-c-red f-10 m-r-15" />
-                        11 MAY 10:35
-                      </h6>
-                    </td>
-                    <td>
-                      <Link to="#" className="label theme-bg2 text-white f-12">
+                        </Link>
+                        <Link to="#" className="label theme-bg text-white f-12" 
+                        onClick={() => this.doCancel(item.box_cd, item.box_num, item.rent_seq)}>
                         Reject
-                      </Link>
-                      <Link to="#" className="label theme-bg text-white f-12">
-                        Approve
-                      </Link>
-                    </td>
+                        </Link>
+                        </>
+                        ) : null}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="text-center">예약된 사물함이 없습니다.</td>
                   </tr>
-                  <tr className="unread">
-                    <td>
-                      <img className="rounded-circle" style={{ width: '40px' }} src={avatar3} alt="activity-user" />
-                    </td>
-                    <td>
-                      <h6 className="mb-1">Karla Sorensen</h6>
-                      <p className="m-0">Lorem Ipsum is simply dummy text of…</p>
-                    </td>
-                    <td>
-                      <h6 className="text-muted">
-                        <i className="fa fa-circle text-c-green f-10 m-r-15" />9 MAY 17:38
-                      </h6>
-                    </td>
-                    <td>
-                      <Link to="#" className="label theme-bg2 text-white f-12">
-                        Reject
-                      </Link>
-                      <Link to="#" className="label theme-bg text-white f-12">
-                        Approve
-                      </Link>
-                    </td>
-                  </tr>
-                  <tr className="unread">
-                    <td>
-                      <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" />
-                    </td>
-                    <td>
-                      <h6 className="mb-1">Ida Jorgensen</h6>
-                      <p className="m-0">Lorem Ipsum is simply dummy text of…</p>
-                    </td>
-                    <td>
-                      <h6 className="text-muted f-w-300">
-                        <i className="fa fa-circle text-c-red f-10 m-r-15" />
-                        19 MAY 12:56
-                      </h6>
-                    </td>
-                    <td>
-                      <Link to="#" className="label theme-bg2 text-white f-12">
-                        Reject
-                      </Link>
-                      <Link to="#" className="label theme-bg text-white f-12">
-                        Approve
-                      </Link>
-                    </td>
-                  </tr>
-                  <tr className="unread">
-                    <td>
-                      <img className="rounded-circle" style={{ width: '40px' }} src={avatar2} alt="activity-user" />
-                    </td>
-                    <td>
-                      <h6 className="mb-1">Albert Andersen</h6>
-                      <p className="m-0">Lorem Ipsum is simply dummy text of…</p>
-                    </td>
-                    <td>
-                      <h6 className="text-muted">
-                        <i className="fa fa-circle text-c-green f-10 m-r-15" />
-                        21 July 12:56
-                      </h6>
-                    </td>
-                    <td>
-                      <Link to="#" className="label theme-bg2 text-white f-12">
-                        Reject
-                      </Link>
-                      <Link to="#" className="label theme-bg text-white f-12">
-                        Approve
-                      </Link>
-                    </td>
-                  </tr>
-                </tbody>
+                )}
+              </tbody>
               </Table>
             </Card.Body>
           </Card>
         </Col>
+        </Form>
 
       </Row>
     </React.Fragment>

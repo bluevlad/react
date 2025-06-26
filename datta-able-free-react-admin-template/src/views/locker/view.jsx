@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import superagent from "superagent";
 import { BASE_API } from "../../config/constant";
 import { Form, Button, Row, Col, Card, Table, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetchLockerDetailData } from "./data";
 
 // useNavigate를 클래스 컴포넌트에서 사용하기 위한 HOC
@@ -87,7 +87,7 @@ class View extends React.Component {
 
   // 개별 문제 아코디언 토글
   render() {
-    const { lockerDetail, activeAccordion, lockerNumList } = this.state;
+    const { lockerDetail, lockerNumList } = this.state;
 
     return (
       <React.Fragment>

@@ -24,6 +24,8 @@ const UserInfo = () => {
     localStorage.removeItem("userNm");
     setUserId("");
     setUserNm("");
+    alert("LogOut OK!");
+    navigate("/");
   };
 
   return (

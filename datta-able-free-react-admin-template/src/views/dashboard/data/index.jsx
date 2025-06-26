@@ -27,13 +27,17 @@ export const mylocker = (callback) => {
 
   request.get(BASE_API+"/dashboard/myRentLocker?userId="+user_id).end((error, response) => {
     let data = [];
+    for (let mylocker of response.body.myRentLocker) {
       data.push({
-        box_cd: response.body.myRentLocker.box_cd,
-        box_num: response.body.myRentLocker.box_nm,
-        rent_start: response.body.myRentLocker.rent_start,
-        rent_end: response.body.myRentLocker.rent_end,
+        box_cd: mylocker.box_cd,
+        box_nm: mylocker.box_nm,
+        box_num: mylocker.box_num,
+        rent_seq: mylocker.rent_seq,
+        rest_yn: mylocker.rest_yn,
+        rent_start: mylocker.rent_start,
+        rent_end: mylocker.rent_end,
       });
-
+    }
     callback(data);
   });
 
