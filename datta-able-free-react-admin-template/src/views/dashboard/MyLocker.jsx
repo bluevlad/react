@@ -148,4 +148,4 @@ class MyLocker extends React.Component {
 }
 };
 
-export default MyLocker;
+export default withRouter(MyLocker);
