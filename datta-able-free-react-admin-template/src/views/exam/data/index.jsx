@@ -2,8 +2,10 @@ import superagent from "superagent";
 import { BASE_API } from "../../../config/constant";
 
 export const fetchExamData = async (page = 1) => {
+
+  const userId = localStorage.getItem("userId");
   try {
-    const response = await superagent.get(`${BASE_API}/exam/getExamList?pageIndex=${page}`);
+    const response = await superagent.get(`${BASE_API}/exam/getExamList?pageIndex=${page}&userId=`+userId);
 
     return {
       examList: response.body.examList.map(exam => ({
@@ -14,7 +16,7 @@ export const fetchExamData = async (page = 1) => {
         exam_open: exam.exam_open,
         exam_end: exam.exam_end,
         exam_period: exam.exam_period,
-        exam_time: exam.exam_period,
+        exam_time: exam.exam_time,
 				is_use: exam.is_use,
         use_flag: exam.use_flag,
         set_id: exam.set_id,
@@ -22,6 +24,7 @@ export const fetchExamData = async (page = 1) => {
         reg_id: exam.reg_id,
         upd_dt: exam.upd_dt,
         upd_id: exam.upd_id,
+        user_id: exam.user_id,
       })),
       paginationInfo: {
         currentPageNo: response.body.paginationInfo.currentPageNo,

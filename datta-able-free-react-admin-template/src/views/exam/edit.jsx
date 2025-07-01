@@ -140,9 +140,9 @@ class View extends React.Component {
             </Card>
 
             <Form onSubmit={this.handleFormSubmit}>
-              <Form.Control name="examId" type="text" value={examDetail.exam_id || ""} readOnly />
-              <Form.Control name="userId" type="text" value={this.state.userId} readOnly />
-              <Form.Control name="userNm" type="text" value={this.state.userNm} readOnly />
+              <Form.Control name="examId" type="hidden" value={examDetail.exam_id || ""} />
+              <Form.Control name="userId" type="hidden" value={this.state.userId} />
+              <Form.Control name="userNm" type="hidden" value={this.state.userNm} />
               {/* 시험 문제 목록 */}
               {queList.length > 0 ? (
                 queList.map((que, index) => (
