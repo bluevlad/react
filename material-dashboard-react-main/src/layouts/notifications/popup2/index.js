@@ -28,7 +28,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
-function Popup2({ open, onClose, children, ...rest }) {
+function Popup2({ open, onClose, children, jsonData, ...rest }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => setModalOpen(true);
@@ -85,8 +85,84 @@ function Popup2({ open, onClose, children, ...rest }) {
               이것은 두 번째 팝업입니다.
             </MDTypography>
             <MDTypography variant="body2" color="text" mb={2}>
-              팝업1에서 이 팝업을 호출했을 때 팝업1이 자동으로 닫혔습니다.
+              팝업1에서 전달받은 JSON 데이터를 표시합니다.
             </MDTypography>
+
+            {jsonData ? (
+              <MDBox
+                p={2}
+                sx={{
+                  backgroundColor: "grey.100",
+                  borderRadius: 1,
+                  border: "1px solid",
+                  borderColor: "grey.300",
+                  mb: 2,
+                }}
+              >
+                <MDTypography variant="h6" color="text" mb={2}>
+                  📊 전달받은 JSON 데이터
+                </MDTypography>
+
+                <MDBox mb={2}>
+                  <MDTypography variant="body2" color="text" fontWeight="medium">
+                    사용자 정보:
+                  </MDTypography>
+                  <MDTypography variant="body2" color="text">
+                    이름: {jsonData.user.name} | 이메일: {jsonData.user.email}
+                  </MDTypography>
+                </MDBox>
+
+                <MDBox mb={2}>
+                  <MDTypography variant="body2" color="text" fontWeight="medium">
+                    설정:
+                  </MDTypography>
+                  <MDTypography variant="body2" color="text">
+                    테마: {jsonData.settings.theme} | 언어: {jsonData.settings.language} | 알림:{" "}
+                    {jsonData.settings.notifications ? "ON" : "OFF"}
+                  </MDTypography>
+                </MDBox>
+
+                <MDBox mb={2}>
+                  <MDTypography variant="body2" color="text" fontWeight="medium">
+                    액션 목록:
+                  </MDTypography>
+                  {jsonData.actions.map((action) => (
+                    <MDTypography key={action.id} variant="body2" color="text">
+                      {action.completed ? "✅" : "⏳"} {action.name}
+                    </MDTypography>
+                  ))}
+                </MDBox>
+
+                <MDBox
+                  p={1}
+                  sx={{
+                    backgroundColor: "info.light",
+                    borderRadius: 1,
+                    border: "1px solid",
+                    borderColor: "info.main",
+                  }}
+                >
+                  <MDTypography variant="caption" color="info.dark">
+                    생성 시간: {new Date(jsonData.timestamp).toLocaleString("ko-KR")}
+                  </MDTypography>
+                </MDBox>
+              </MDBox>
+            ) : (
+              <MDBox
+                p={2}
+                sx={{
+                  backgroundColor: "warning.light",
+                  borderRadius: 1,
+                  border: "1px solid",
+                  borderColor: "warning.main",
+                }}
+              >
+                <MDTypography variant="body2" color="warning.dark">
+                  ⚠️ JSON 데이터가 전달되지 않았습니다.
+                </MDTypography>
+              </MDBox>
+            )}
+
             <MDBox
               p={2}
               sx={{
@@ -97,7 +173,7 @@ function Popup2({ open, onClose, children, ...rest }) {
               }}
             >
               <MDTypography variant="body2" color="success.dark">
-                ✅ 팝업 연동이 성공적으로 작동했습니다!
+                ✅ 팝업 연동과 데이터 전달이 성공적으로 작동했습니다!
               </MDTypography>
             </MDBox>
           </MDBox>
@@ -128,6 +204,7 @@ Popup2.defaultProps = {
   open: false,
   onClose: () => {},
   children: null,
+  jsonData: null,
 };
 
 // Typechecking props for the Popup2
@@ -135,6 +212,7 @@ Popup2.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   children: PropTypes.node,
+  jsonData: PropTypes.object,
 };
 
 export default Popup2;
