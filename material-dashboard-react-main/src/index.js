@@ -21,6 +21,9 @@ import App from "App";
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
 
+// i18next 초기화
+import "./i18n";
+
 const container = document.getElementById("app");
 const root = createRoot(container);
 
