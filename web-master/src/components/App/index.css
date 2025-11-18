@@ -1,0 +1,29 @@
+@import 'normalize.css';
+
+:root {
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    color: #212121;
+    background: var(--bodyBackground);
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+a:not([type="button"]) {
+    color: #222;
+    border-bottom: 1px solid #222;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        color: #444;
+        border-color: transparent;
+        text-decoration: none;
+        transition: all .2s ease;
+    }
+}

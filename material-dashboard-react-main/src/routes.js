@@ -42,7 +42,6 @@ import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Member from "layouts/member";
 import Profile from "layouts/profile";
-import Templates from "layouts/templates";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
@@ -89,14 +88,6 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/member",
     component: <Member />,
-  },
-  {
-    type: "collapse",
-    name: "Templates",
-    key: "templates",
-    icon: <Icon fontSize="small">category</Icon>,
-    route: "/templates",
-    component: <Templates />,
   },
   {
     type: "collapse",

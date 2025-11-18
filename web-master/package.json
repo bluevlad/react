@@ -1,0 +1,60 @@
+{
+  "name": "devnews",
+  "version": "1.0.0",
+  "description": "Developer news aggregator.",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config config/webpack.js --port 3000 --hot --inline --progress --colors",
+    "build": "webpack --config config/webpack.js",
+    "prod": "NODE_ENV=production webpack --config config/webpack.js -p",
+    "predeploy": "npm run prod",
+    "deploy": "surge --project ./build",
+    "test": "echo 'Error: no test specified'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devnews/web.git"
+  },
+  "author": "Sunny Singh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devnews/web/issues"
+  },
+  "homepage": "https://devne.ws/",
+  "dependencies": {
+    "autolinker": "^1.4.4",
+    "babel-preset-react-hmre": "^1.1.1",
+    "html-escape": "^2.0.0",
+    "load-script": "^1.0.0",
+    "localforage": "^1.5.2",
+    "material-ui": "^0.19.4",
+    "moment": "^2.19.1",
+    "normalize.css": "^7.0.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-tap-event-plugin": "^3.0.2",
+    "superagent": "^3.6.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.5.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.26.0",
+    "html-webpack-plugin": "^2.12.0",
+    "json-loader": "^0.5.4",
+    "open-browser-webpack-plugin": "0.0.3",
+    "postcss-cssnext": "^2.5.1",
+    "postcss-font-magician": "^1.4.0",
+    "postcss-import": "^8.0.2",
+    "postcss-loader": "^1.1.1",
+    "raw-loader": "^0.5.1",
+    "react-svg-inline": "^2.0.1",
+    "style-loader": "^0.13.0",
+    "surge": "^0.18.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
