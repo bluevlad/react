@@ -33,7 +33,7 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // API
-import { fetchMemberListData } from "api/table";
+import { fetchMemberListData } from "api/member";
 
 function Member() {
   const [memberList, setMemberList] = useState([]);
@@ -73,6 +73,7 @@ function Member() {
     { Header: "역할", accessor: "userRole", align: "center" },
     { Header: "상태", accessor: "status", align: "center" },
     { Header: "등록일", accessor: "regDt", align: "center" },
+    { Header: "action", accessor: "action", align: "center" },
   ];
 
   const rows = memberList.map((member) => ({
@@ -119,6 +120,11 @@ function Member() {
     regDt: (
       <MDTypography variant="caption" color="text" fontWeight="regular">
         {member.regDt ? new Date(member.regDt).toLocaleDateString("ko-KR") : "-"}
+      </MDTypography>
+    ),
+    action: (
+      <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+        Edit
       </MDTypography>
     ),
   }));
