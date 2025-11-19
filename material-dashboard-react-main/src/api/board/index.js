@@ -8,12 +8,10 @@ export const fetchBoardData = async (page = 1) => {
     return {
       boardList: response.body.boardList.map((board) => ({
         boardMngSeq: board.BOARD_MNG_SEQ,
-        parentBoardMngSeq: board.PARENT_BOARD_MNG_SEQ,
-        boardTitle: board.BOARD_TITLE,
+        boardSeq: board.BOARD_SEQ,
+        parentBoardSeq: board.PARENT_BOARD_SEQ,
+        subject: board.SUBJECT,
         boardContent: board.BOARD_CONTENT,
-        filePath: board.FILE_PATH,
-        fileName: board.FILE_NAME,
-        realFileName: board.REAL_FILE_NAME,
         noticeTopYn: board.NOTICE_TOP_YN,
         openYn: board.OPEN_YN,
         isUse: board.IS_USE,
@@ -22,6 +20,9 @@ export const fetchBoardData = async (page = 1) => {
         regId: board.REG_ID,
         updDt: board.UPD_DT,
         updId: board.UPD_ID,
+        filePath: board.FILE_PATH,
+        fileName: board.FILE_NAME,
+        realFileName: board.REAL_FILE_NAME,
         createName: board.CREATE_NAME,
         answer: board.ANSWER,
         thumbnailFilePath: board.THUMBNAIL_FILE_PATH,
@@ -70,8 +71,9 @@ export const fetchboardDetailData = async () => {
     return {
       boardDetail: {
         boardMngSeq: response.body.boardDetail.BOARD_MNG_SEQ,
-        parentBoardMngSeq: response.body.boardDetail.PARENT_BOARD_MNG_SEQ,
-        boardTitle: response.body.boardDetail.BOARD_TITLE,
+        boardSeq: board.BOARD_SEQ,
+        parentBoardSeq: board.PARENT_BOARD_SEQ,
+        subject: response.body.boardDetail.SUBJECT,
         boardContent: response.body.boardDetail.BOARD_CONTENT,
         filePath: response.body.boardDetail.FILE_PATH,
         fileName: response.body.boardDetail.FILE_NAME,
