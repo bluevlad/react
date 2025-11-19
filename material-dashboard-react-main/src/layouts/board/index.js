@@ -16,6 +16,9 @@ Coded by www.creative-tim.com
 import { useState, useEffect } from "react";
 
 // @mui material components
+import Icon from "@mui/material/Icon";
+
+// @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Pagination from "@mui/material/Pagination";
@@ -33,31 +36,31 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // API
-import { fetchMemberListData } from "api/member";
+import { fetchBoardData } from "api/board";
 
-function Member() {
-  const [memberList, setMemberList] = useState([]);
+function Board() {
+  const [boardList, setBoardList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [paginationInfo, setPaginationInfo] = useState(null);
 
   useEffect(() => {
-    const loadMemberData = async () => {
+    const loadBoardData = async () => {
       setLoading(true);
       try {
-        const data = await fetchMemberListData(currentPage);
-        setMemberList(data.memberList || []);
+        const data = await fetchBoardData(currentPage);
+        setBoardList(data.boardList || []);
         setPaginationInfo(data.paginationInfo || null);
         setTotalPages(data.paginationInfo?.totalPageCount || 1);
       } catch (error) {
-        console.error("Failed to load member data:", error);
+        console.error("Failed to load board data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    loadMemberData();
+    loadBoardData();
   }, [currentPage]);
 
   const handlePageChange = (event, value) => {
@@ -65,66 +68,67 @@ function Member() {
   };
 
   const columns = [
-    { Header: "회원ID", accessor: "userId", width: "15%", align: "left" },
-    { Header: "회원명", accessor: "userName", width: "15%", align: "left" },
-    { Header: "이메일", accessor: "email", width: "20%", align: "left" },
-    { Header: "성별", accessor: "sex", align: "center" },
-    { Header: "생년월일", accessor: "birthDay", align: "center" },
-    { Header: "역할", accessor: "userRole", align: "center" },
-    { Header: "상태", accessor: "status", align: "center" },
+    { Header: "게시판구분", accessor: "boardMngSeq", width: "15%", align: "left" },
+    { Header: "게시판번호", accessor: "boardSeq", width: "15%", align: "left" },
+    { Header: "게시판제목", accessor: "subject", width: "15%", align: "left" },
+    { Header: "공지여부", accessor: "noticeTopYn", width: "20%", align: "left" },
+    { Header: "공개여부", accessor: "openYn", align: "center" },
+    { Header: "사용여부", accessor: "isUse", align: "center" },
+    { Header: "열람수", accessor: "hits", align: "center" },
     { Header: "등록일", accessor: "regDt", align: "center" },
+    { Header: "등록자", accessor: "regId", align: "center" },
     { Header: "action", accessor: "action", align: "center" },
   ];
 
-  const rows = memberList.map((member) => ({
-    userId: (
+  const rows = boardList.map((board) => ({
+    boardMngSeq: (
       <MDTypography variant="caption" color="text" fontWeight="medium">
-        {member.userId}
+        {board.boardMngSeq}
       </MDTypography>
     ),
-    userName: (
+    boardSeq: (
       <MDTypography variant="caption" color="text" fontWeight="medium">
-        {member.userName}
+        {board.boardSeq}
       </MDTypography>
     ),
-    email: (
+    subject: (
       <MDTypography variant="caption" color="text" fontWeight="regular">
-        {member.email}
+        {board.subject}
       </MDTypography>
     ),
-    sex: (
+    noticeTopYn: (
       <MDTypography variant="caption" color="text" fontWeight="medium">
-        {member.sex === "M" ? "남성" : member.sex === "F" ? "여성" : "-"}
+        {board.noticeTopYn === "Y" ? "공지" : "일반"}
       </MDTypography>
     ),
-    birthDay: (
+    openYn: (
       <MDTypography variant="caption" color="text" fontWeight="regular">
-        {member.birthDay}
+        {board.openYn === "Y" ? "공개" : "비공개"}
       </MDTypography>
     ),
-    userRole: (
+    isUse: (
       <MDTypography variant="caption" color="text" fontWeight="medium">
-        {member.userRole}
+        {board.isUse === "Y" ? "사용" : "비사용"}
       </MDTypography>
     ),
-    status: (
-      <MDBox ml={-1}>
-        <MDBadge
-          badgeContent={member.isUse === "Y" ? "활성" : "비활성"}
-          color={member.isUse === "Y" ? "success" : "dark"}
-          variant="gradient"
-          size="sm"
-        />
-      </MDBox>
+    hits: (
+      <MDTypography variant="caption" color="text" fontWeight="medium">
+        {board.hits}
+      </MDTypography>
     ),
     regDt: (
       <MDTypography variant="caption" color="text" fontWeight="regular">
-        {member.regDt ? new Date(member.regDt).toLocaleDateString("ko-KR") : "-"}
+        {board.regDt ? new Date(board.regDt).toLocaleDateString("ko-KR") : "-"}
+      </MDTypography>
+    ),
+    regId: (
+      <MDTypography variant="caption" color="text" fontWeight="regular">
+        {board.regId}
       </MDTypography>
     ),
     action: (
-      <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-        Edit
+      <MDTypography component="a" href="#" color="text">
+        <Icon>more_vert</Icon>
       </MDTypography>
     ),
   }));
@@ -147,7 +151,7 @@ function Member() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  회원 목록
+                  게시판 목록
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -207,4 +211,4 @@ function Member() {
   );
 }
 
-export default Member;
+export default Board;
